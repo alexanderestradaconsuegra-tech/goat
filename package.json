@@ -1,0 +1,14 @@
+{
+  "name": "goat-league",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "vercel-build": "next build"
+  },
+  "dependencies": {
+    "next": "16.2.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  }
+}

@@ -1,0 +1,44 @@
+import { supabaseRest } from "../../../lib/supabase-rest.js";
+
+export const dynamic = "force-dynamic";
+
+function json(data, status = 200) {
+  return Response.json(data, {
+    status,
+    headers: { "cache-control": "no-store" }
+  });
+}
+
+export async function POST(request) {
+  const payload = await request.json().catch(() => ({}));
+  const teamName = String(payload.team_name || "").trim();
+  const managerName = String(payload.manager_name || "").trim();
+  const whatsapp = String(payload.whatsapp || "").trim();
+  const categories = Array.isArray(payload.categories) ? payload.categories.map(String).filter(Boolean) : [];
+  const message = String(payload.message || "").trim();
+  const website = String(payload.website || "").trim();
+
+  if (website) return json({ ok: true });
+  if (!teamName || !managerName || !whatsapp || !categories.length) {
+    return json({ error: "Faltan datos obligatorios." }, 400);
+  }
+
+  const phoneDigits = whatsapp.replace(/\D/g, "");
+  if (phoneDigits.length < 8 || phoneDigits.length > 15) {
+    return json({ error: "WhatsApp invalido." }, 400);
+  }
+
+  await supabaseRest("goat_registrations", {
+    method: "POST",
+    headers: { prefer: "return=minimal" },
+    body: {
+      team_name: teamName,
+      manager_name: managerName,
+      whatsapp,
+      categories,
+      message
+    }
+  });
+
+  return json({ ok: true }, 201);
+}

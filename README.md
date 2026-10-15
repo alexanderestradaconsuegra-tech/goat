@@ -1,26 +1,17 @@
-# GOAT LEAGUE 2026
+# GOAT League 2026
 
-Landing estática (HTML + CSS + JS en un solo archivo, sin build). Rediseño visual de la web original manteniendo contenido, estructura y paleta.
+Sitio oficial de GOAT League 2026, actualizado para el formato de torneo relámpago de sábado y domingo.
 
-## Archivos de imagen esperados (opcionales, junto a `index.html`)
+## Desarrollo local
 
-| Archivo | Uso |
-| --- | --- |
-| `goat-icon.png` | Logo, favicon y marca de agua |
-| `hero-goat-league.jpg` | Fondo del hero y vista previa al compartir |
-| `goat-awards.jpg` | Foto de la sección Premios |
-| `metrikas-logo.png` | Logo de Métrikas |
+```bash
+npm install
+npm run dev
+```
 
-Si un archivo no está, la página muestra un reemplazo visual y no se rompe.
+La aplicación queda disponible en `http://localhost:3000`.
 
-## Conectar el backend
+## Producción
 
-En el bloque `window.GOAT_CONFIG` al final de `index.html`:
+El proyecto usa Next.js y está preparado para desplegarse en Vercel. Las credenciales privadas de Supabase deben configurarse como variables de entorno en Vercel y no deben guardarse en este repositorio.
 
-- `venue`: nombre, dirección y link de mapa de la sede (se replica en toda la página).
-- `registrationApi`: endpoint `POST` JSON `{ team, manager, phone, categories[], message }`. Si está vacío, el formulario abre WhatsApp con los datos precargados.
-- `competitionApi`: endpoint `GET` que recibe `tab` y `category` y devuelve `{ rows: [...] }` para pintar la tabla de posiciones, partidos, equipos, jugadores y goleadores.
-
-## Deploy
-
-Proyecto estático: en Vercel usar Framework Preset "Other", sin build command y sin output directory.
