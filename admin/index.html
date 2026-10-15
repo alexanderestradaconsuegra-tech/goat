@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07150d">
+  <meta name="robots" content="noindex,nofollow">
+  <title>GOAT Admin · Liga 2026</title>
+  <meta name="description" content="Panel privado de administración de GOAT LEAGUE 2026, Santiago de Chile.">
+  <link rel="icon" href="/goat-icon.png" type="image/png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="login-page" id="login-view">
+    <section class="login-brand">
+      <a href="https://goatleague2026.vercel.app" class="back-link">← Volver a GOAT LEAGUE</a>
+      <div class="login-copy">
+        <img src="/goat-icon.png" alt="" class="login-mark">
+        <span>GOAT LEAGUE · SANTIAGO 2026</span>
+        <h1>TODO EL TORNEO.<br><em>BAJO CONTROL.</em></h1>
+        <p>Inscripciones, pagos, equipos, jugadores, fechas, resultados, goleadores y fotografías en un solo panel.</p>
+      </div>
+      <div class="secure-line"><i></i> Acceso protegido por Supabase Auth</div>
+    </section>
+    <section class="login-form-wrap">
+      <form class="login-card" id="login-form">
+        <img src="/goat-icon.png" alt="GOAT LEAGUE" class="mobile-mark">
+        <span class="kicker">Panel de organización</span>
+        <h2>Iniciar sesión</h2>
+        <p>Usa un correo autorizado por la organización.</p>
+        <label>Correo electrónico<input type="email" name="email" autocomplete="email" required placeholder="tu@correo.com"></label>
+        <label>Contraseña<input type="password" name="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label>
+        <p class="feedback error" id="login-error" role="alert"></p>
+        <p class="feedback success" id="login-success" role="status"></p>
+        <button class="primary-button" type="submit">Entrar al panel <b>↗</b></button>
+        <button class="secondary-button" type="button" id="signup-button">Crear mi acceso autorizado</button>
+        <small>Solo los correos invitados pueden crear una cuenta administrativa.</small>
+      </form>
+    </section>
+  </main>
+
+  <div class="admin-shell" id="admin-view" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="admin-brand"><img src="/goat-icon.png" alt=""><span><strong>GOAT</strong><small>ADMIN · 2026</small></span></div>
+      <nav aria-label="Secciones administrativas">
+        <button class="nav-item active" data-panel="overview"><span>01</span>Resumen</button>
+        <button class="nav-item" data-panel="registrations"><span>02</span>Inscripciones <b id="pending-badge">0</b></button>
+        <button class="nav-item" data-panel="payments"><span>03</span>Pagos</button>
+        <button class="nav-item" data-panel="teams"><span>04</span>Equipos</button>
+        <button class="nav-item" data-panel="players"><span>05</span>Jugadores</button>
+        <button class="nav-item" data-panel="matches"><span>06</span>Partidos</button>
+        <button class="nav-item" data-panel="competition"><span>07</span>Posiciones y goleadores</button>
+        <button class="nav-item" data-panel="gallery"><span>08</span>Fotografías</button>
+        <button class="nav-item" data-panel="settings"><span>09</span>Sede del torneo</button>
+        <button class="nav-item" data-panel="delegates"><span>10</span>Administradores</button>
+      </nav>
+      <a class="public-link" href="https://goatleague2026.vercel.app" target="_blank" rel="noopener">Abrir web pública <b>↗</b></a>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
+        <div><span>GOAT LEAGUE 2026</span><strong id="panel-title">Resumen</strong></div>
+        <div class="session"><span id="session-email"></span><button id="logout-button">Salir</button></div>
+      </header>
+
+      <div class="loading" id="admin-loading"><span></span>Cargando información del torneo…</div>
+      <p class="global-feedback" id="global-feedback" role="status"></p>
+
+      <section class="panel active" data-panel-view="overview">
+        <div class="page-heading"><div><span>Operación en tiempo real</span><h2>CONTROL GENERAL</h2></div><button class="outline-button" data-refresh>Actualizar datos</button></div>
+        <div class="metric-grid" id="overview-metrics"></div>
+        <div class="overview-grid">
+          <article class="surface"><div class="surface-head"><h3>Solicitudes recientes</h3><button data-go-panel="registrations">Ver todas</button></div><div id="recent-registrations"></div></article>
+          <article class="surface payment-summary"><div class="surface-head"><h3>Estado de pagos</h3><button data-go-panel="payments">Gestionar</button></div><div id="payment-summary"></div></article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel-view="registrations">
+        <div class="page-heading"><div><span>Formulario público conectado</span><h2>INSCRIPCIONES</h2></div><button class="outline-button" data-refresh>Actualizar</button></div>
+        <div class="filter-row"><label>Estado<select id="registration-filter"><option value="all">Todas</option><option value="pending">Pendientes</option><option value="contacted">Contactadas</option><option value="approved">Aprobadas</option><option value="rejected">Rechazadas</option></select></label><p>Cada solicitud enviada desde la web aparece aquí automáticamente.</p></div>
+        <div class="surface table-surface"><div id="registrations-table"></div></div>
+      </section>
+
+      <section class="panel" data-panel-view="payments">
+        <div class="page-heading"><div><span>Montos acordados con cada academia</span><h2>PAGOS POR ACADEMIA</h2></div></div>
+        <div class="split-layout">
+          <div class="surface table-surface"><div id="payments-table"></div></div>
+          <form class="surface editor-form" id="payment-form">
+            <div class="form-title"><span id="payment-form-mode">Nuevo registro</span><h3>Registrar pago</h3></div>
+            <input type="hidden" name="id">
+            <label>Solicitud vinculada<select name="registration_id"><option value="">Sin vincular</option></select></label>
+            <label>Academia<input name="academy_name" required maxlength="100" placeholder="Nombre de la academia"></label>
+            <div class="form-grid"><label>Jugadores registrados<input name="player_count" type="number" min="1" required value="1"></label><label>Monto total acordado<input name="amount_due" type="number" min="0" step="1000" required value="0"></label></div>
+            <label>Monto pagado<input name="amount_paid" type="number" min="0" step="1000" required value="0"></label>
+            <div class="form-grid"><label>Medio<select name="payment_method"><option value="transferencia">Transferencia</option><option value="efectivo">Efectivo</option><option value="tarjeta">Tarjeta</option><option value="otro">Otro</option></select></label><label>Fecha<input name="paid_at" type="date"></label></div>
+            <label>Referencia<input name="payment_reference" maxlength="120" placeholder="N.º de operación"></label>
+            <label>Notas<textarea name="notes" rows="3" maxlength="500" placeholder="Información adicional"></textarea></label>
+            <p class="feedback" data-form-feedback></p>
+            <button class="primary-button" type="submit">Guardar pago <b>↗</b></button>
+            <button class="secondary-button" type="button" data-reset-payment>Cancelar edición</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel" data-panel-view="teams">
+        <div class="page-heading"><div><span>Clubes y categorías</span><h2>EQUIPOS</h2></div></div>
+        <div class="split-layout"><div class="surface table-surface"><div id="teams-table"></div></div><form class="surface editor-form" id="team-form"><div class="form-title"><span>Competencia</span><h3>Agregar equipo</h3></div><label>Nombre<input name="name" required maxlength="100"></label><div class="form-grid"><label>Categoría<select name="category"> <option>Sub 7</option><option>Sub 9</option><option>Sub 11</option><option>Sub 13</option><option>Sub 15</option></select></label><label>Sigla<input name="abbreviation" required minlength="1" maxlength="4" placeholder="GOAT"></label></div><div class="form-grid"><label>Color principal<input name="primary_color" type="color" value="#adff39"></label><label>Color camiseta<input name="shirt_color" value="Por definir" maxlength="40"></label></div><label>Responsable<input name="captain" maxlength="100"></label><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Guardar equipo <b>↗</b></button></form></div>
+      </section>
+
+      <section class="panel" data-panel-view="players">
+        <div class="page-heading"><div><span>Planteles y estadísticas</span><h2>JUGADORES</h2></div></div>
+        <div class="split-layout"><div class="surface table-surface"><div id="players-table"></div></div><form class="surface editor-form" id="player-form"><div class="form-title"><span>Plantel del equipo</span><h3>Agregar jugador</h3></div><label>Equipo<select name="team_id" required></select></label><label>Nombre completo<input name="full_name" required maxlength="100"></label><div class="form-grid"><label>Posición<select name="position"><option>POR</option><option>DEF</option><option>MED</option><option>DEL</option></select></label><label>Dorsal<input name="shirt_number" type="number" min="1" max="99" value="10"></label></div><div class="form-grid"><label>Goles<input name="goals" type="number" min="0" value="0"></label><label>Asistencias<input name="assists" type="number" min="0" value="0"></label></div><label>URL de foto<input name="photo_url" type="url" placeholder="https://..."></label><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Guardar jugador <b>↗</b></button></form></div>
+      </section>
+
+      <section class="panel" data-panel-view="matches">
+        <div class="page-heading"><div><span>Calendario y resultados</span><h2>PARTIDOS</h2></div></div>
+        <div class="split-layout"><div class="surface table-surface"><div id="matches-table"></div></div><form class="surface editor-form" id="match-form"><div class="form-title"><span>Fecha oficial</span><h3>Programar partido</h3></div><div class="form-grid"><label>Categoría<select name="category"><option>Sub 7</option><option>Sub 9</option><option>Sub 11</option><option>Sub 13</option><option>Sub 15</option></select></label><label>Fecha / ronda<input name="round_label" required placeholder="Fecha 1"></label></div><label>Inicio<input name="starts_at" type="datetime-local" required></label><label>Lugar<input name="venue" placeholder="Usa la sede general o indica otra cancha" required></label><div class="form-grid"><label>Local<select name="home_team_id" required></select></label><label>Visita<select name="away_team_id" required></select></label></div><div class="form-grid"><label>Goles local<input name="home_score" type="number" min="0"></label><label>Goles visita<input name="away_score" type="number" min="0"></label></div><label>Estado<select name="status"><option value="scheduled">Programado</option><option value="completed">Finalizado</option><option value="cancelled">Cancelado</option></select></label><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Guardar partido <b>↗</b></button></form></div>
+      </section>
+
+      <section class="panel" data-panel-view="competition">
+        <div class="page-heading"><div><span>Calculado desde los resultados</span><h2>POSICIONES Y GOLEADORES</h2></div><label class="category-select">Categoría<select id="competition-category"><option>Sub 7</option><option>Sub 9</option><option>Sub 11</option><option>Sub 13</option><option>Sub 15</option></select></label></div>
+        <div class="overview-grid"><article class="surface table-surface"><div class="surface-head"><h3>Tabla de posiciones</h3></div><div id="standings-table"></div></article><article class="surface table-surface"><div class="surface-head"><h3>Goleadores</h3></div><div id="scorers-table"></div></article></div>
+      </section>
+
+      <section class="panel" data-panel-view="gallery">
+        <div class="page-heading"><div><span>Galería pública</span><h2>FOTOGRAFÍAS</h2></div></div>
+        <div class="split-layout"><div class="gallery-grid" id="gallery-grid"></div><form class="surface editor-form" id="gallery-form"><div class="form-title"><span>JPG, PNG o WebP · máximo 15 MB</span><h3>Subir fotografía</h3></div><label>Archivo<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required></label><label>Descripción<input name="caption" required maxlength="140" placeholder="Fecha, categoría o reconocimiento"></label><p class="form-hint">La fotografía aparecerá automáticamente en la galería de la web pública.</p><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Publicar fotografía <b>↗</b></button></form></div>
+      </section>
+
+      <section class="panel" data-panel-view="settings">
+        <div class="page-heading"><div><span>Información visible en la web pública</span><h2>SEDE DEL TORNEO</h2></div></div>
+        <div class="split-layout">
+          <article class="surface venue-preview">
+            <span>Vista pública</span>
+            <img src="/goat-icon.png" alt="">
+            <h3 id="venue-preview-name">Sede por confirmar</h3>
+            <p id="venue-preview-address">Santiago de Chile</p>
+            <small>Este dato aparecerá en la portada, la información para academias y el pie de página.</small>
+          </article>
+          <form class="surface editor-form" id="settings-form">
+            <div class="form-title"><span>Ubicación oficial</span><h3>Editar sede</h3></div>
+            <label>Nombre del recinto<input name="venue_name" required minlength="2" maxlength="120" placeholder="Ej: Complejo Deportivo GOAT"></label>
+            <label>Dirección completa<input name="venue_address" required minlength="2" maxlength="240" placeholder="Calle, número, comuna, Santiago"></label>
+            <label>Enlace de Google Maps<input name="maps_url" type="url" maxlength="500" placeholder="https://maps.google.com/..."></label>
+            <p class="feedback" data-form-feedback></p>
+            <button class="primary-button" type="submit">Publicar dirección <b>↗</b></button>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel" data-panel-view="delegates">
+        <div class="page-heading"><div><span>Accesos protegidos</span><h2>ADMINISTRADORES</h2></div></div>
+        <div class="split-layout"><div class="surface table-surface"><div id="delegates-table"></div></div><form class="surface editor-form" id="delegate-form"><div class="form-title"><span>Invitación por correo</span><h3>Autorizar delegado</h3></div><label>Correo electrónico<input name="email" type="email" required placeholder="delegado@academia.cl"></label><p>El delegado podrá crear su contraseña únicamente con el correo autorizado.</p><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Autorizar correo <b>↗</b></button></form></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
