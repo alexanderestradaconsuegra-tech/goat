@@ -26,12 +26,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js")</script>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/impacto.css">
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"SportsEvent","name":"GOAT LEAGUE 2026","description":"Torneo relámpago infantil de fútbol 7 en Santiago de Chile para categorías Sub 7, Sub 9, Sub 11, Sub 13 y Sub 15.","sport":"Fútbol","startDate":"2026-10-03","endDate":"2026-10-04","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Sede por confirmar","address":{"@type":"PostalAddress","addressLocality":"Santiago","addressRegion":"Región Metropolitana","addressCountry":"CL"}},"organizer":{"@type":"Organization","name":"GOAT LEAGUE"},"url":"https://goatleague2026.vercel.app/"}
   </script>
 </head>
 <body>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <div class="ticker" aria-label="Información principal de la temporada">
@@ -63,6 +67,8 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-media" aria-hidden="true"></div>
       <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="hero-spot" aria-hidden="true"></div>
+      <div class="hero-giant" aria-hidden="true">GOAT</div>
       <div class="shell hero-grid">
         <div class="hero-copy">
           <div class="season-pill"><span></span> Santiago de Chile · Primera edición 2026</div>
@@ -84,6 +90,7 @@
           <a href="#inscripcion">Reservar un cupo para mi club <span>↗</span></a>
         </aside>
       </div>
+      <div class="hero-chips" aria-hidden="true"><span class="c1">Fútbol 7</span><span class="c2">Sábado + domingo</span></div>
       <div class="scroll-cue" aria-hidden="true"><span></span> DESCUBRE EL TORNEO</div>
     </section>
 
@@ -93,6 +100,15 @@
         <div class="category-rail-sequence" aria-hidden="true"><span>SUB 7</span><i>◆</i><span>SUB 9</span><i>◆</i><span>SUB 11</span><i>◆</i><span>SUB 13</span><i>◆</i><span>SUB 15</span><i>◆</i><span class="format-chip">FÚTBOL 7</span><i>◆</i></div>
       </div>
     </div>
+
+    <section class="stats" aria-label="El torneo en cifras">
+      <div class="shell stats-grid">
+        <div class="reveal"><strong data-count="2">2</strong><span>Días de competencia</span></div>
+        <div class="reveal"><strong data-count="5">5</strong><span>Categorías</span></div>
+        <div class="reveal"><strong data-count="180">180</strong><span>Medallas</span></div>
+        <div class="reveal"><strong data-count="30">30</strong><span>Trofeos</span></div>
+      </div>
+    </section>
 
     <section class="intro section" id="liga">
       <div class="shell intro-grid">
@@ -190,6 +206,14 @@
             <i>→</i>
             <div><small>Domingo · finales</small><strong>JORNADA 2</strong><span>Semifinales, finales y premiación oficial.</span></div>
           </div>
+          <div class="route reveal" aria-label="Ruta del torneo">
+            <ol class="route-track">
+              <li><span>01</span><strong>Fase de grupos</strong><small>Sábado · 09:00 — 12:00</small></li>
+              <li><span>02</span><strong>Semifinales</strong><small>Domingo</small></li>
+              <li><span>03</span><strong>Finales</strong><small>Domingo</small></li>
+              <li class="cup"><span>04</span><strong>Premiación oficial</strong><small>Copas y medallas</small></li>
+            </ol>
+          </div>
         </header>
         <div class="format-grid">
           <article class="format-card wide glass-card reveal"><span class="format-number">7<span>×</span>7</span><div><h3>Fútbol 7</h3><p>Competencia infantil y juvenil por categorías.</p></div></article>
@@ -216,13 +240,13 @@
           <figure class="awards-photo reveal"><img src="/goat-awards.jpg" alt="Jugador infantil chileno recibiendo un reconocimiento de fútbol"><span>Reconocimientos que celebran el esfuerzo de cada jugador</span></figure>
           <div class="awards-panel reveal">
             <div class="award-totals">
-              <div><strong>180</strong><span>Medallas</span></div>
-              <div><strong>30</strong><span>Trofeos</span></div>
+              <div><strong data-count="180">180</strong><span>Medallas</span></div>
+              <div><strong data-count="30">30</strong><span>Trofeos</span></div>
             </div>
-            <div class="podium-list">
-              <article><b>1º</b><div><strong>Campeón</strong><span>Copa grande + medallas de oro</span></div></article>
-              <article><b>2º</b><div><strong>Subcampeón</strong><span>Copa mediana + medallas de plata</span></div></article>
-              <article><b>3º</b><div><strong>Tercer lugar</strong><span>Copa + medallas de bronce</span></div></article>
+            <div class="podium">
+              <article class="pod second"><b>2º</b><strong>Subcampeón</strong><span>Copa mediana + medallas de plata</span></article>
+              <article class="pod first"><b>1º</b><strong>Campeón</strong><span>Copa grande + medallas de oro</span></article>
+              <article class="pod third"><b>3º</b><strong>Tercer lugar</strong><span>Copa + medallas de bronce</span></article>
             </div>
             <div class="individual-awards">
               <span>Premios individuales por categoría</span>
@@ -257,6 +281,15 @@
       </div>
     </section>
 
+    <div class="mega" aria-hidden="true">
+      <div class="mega-track">
+        <span>GOAT LEAGUE</span><i>◆</i><span class="o">2026</span><i>◆</i><span>SANTIAGO</span><i>◆</i><span class="o">FÚTBOL 7</span><i>◆</i>
+        <span>GOAT LEAGUE</span><i>◆</i><span class="o">2026</span><i>◆</i><span>SANTIAGO</span><i>◆</i><span class="o">FÚTBOL 7</span><i>◆</i>
+        <span>GOAT LEAGUE</span><i>◆</i><span class="o">2026</span><i>◆</i><span>SANTIAGO</span><i>◆</i><span class="o">FÚTBOL 7</span><i>◆</i>
+        <span>GOAT LEAGUE</span><i>◆</i><span class="o">2026</span><i>◆</i><span>SANTIAGO</span><i>◆</i><span class="o">FÚTBOL 7</span><i>◆</i>
+      </div>
+    </div>
+
     <section class="registration section" id="inscripcion">
       <div class="shell registration-grid">
         <div class="registration-copy reveal">
@@ -273,7 +306,14 @@
         </div>
 
         <form class="registration-form glass-card reveal" id="team-form" novalidate>
+          <div class="form-done" role="status">
+            <div class="check"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square" aria-hidden="true"><path d="M10 25l9 9 19-21"/></svg></div>
+            <h3>Solicitud registrada</h3>
+            <p>Tu equipo quedó guardado. La organización te contactará para confirmar el cupo.</p>
+            <button class="form-again" type="button">Inscribir otro equipo</button>
+          </div>
           <div class="form-head"><span>Solicitud de inscripción</span><b>GOAT LEAGUE · 2026</b></div>
+          <div class="form-progress" aria-hidden="true"><i></i></div>
           <label>Nombre del club o academia <input name="team" required maxlength="100" autocomplete="organization" placeholder="Ej: Academia Los Grandes"></label>
           <div class="form-split">
             <label>Nombre del responsable <input name="manager" required maxlength="100" autocomplete="name" placeholder="Nombre y apellido"></label>
@@ -312,5 +352,6 @@
 
   <a class="floating-cta" href="#inscripcion"><span>Inscribir</span><b>↗</b></a>
   <script src="/app.js" defer></script>
+  <script src="/impacto.js" defer></script>
 </body>
 </html>

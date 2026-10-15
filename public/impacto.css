@@ -1,0 +1,232 @@
+/* GOAT LEAGUE · capa de impacto
+   Se carga después de styles.css y usa sus mismos tokens (--lime, --forest, --oyster…). */
+
+:root { --ease: cubic-bezier(.22, 1, .36, 1); }
+
+/* overflow: clip recorta igual que hidden pero no permite scroll por código (scrollIntoView) */
+.hero, .intro, .competition, .format, .awards, .metrikas, .registration { overflow: hidden; overflow: clip; }
+
+/* ───────── Progreso de scroll y cursor ───────── */
+.progress {
+  position: fixed; z-index: 120; top: 0; left: 0; width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--lime), var(--lime-soft));
+  box-shadow: 0 0 14px rgba(173, 255, 57, .8);
+  transform: scaleX(0); transform-origin: 0 50%;
+}
+.cursor {
+  position: fixed; z-index: 130; top: 0; left: 0; width: 38px; height: 38px; margin: -19px 0 0 -19px;
+  border: 1.5px solid var(--lime); border-radius: 50%; pointer-events: none; opacity: 0;
+  box-shadow: 0 0 0 1.5px rgba(6, 16, 10, .55);
+  transition: opacity .3s, background .25s; will-change: transform;
+}
+.cursor.on { opacity: .85; }
+.cursor.big { background: rgba(173, 255, 57, .2); }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* ───────── Header que se fija al hacer scroll ───────── */
+.site-header { transition: background .3s, box-shadow .3s, top .3s; }
+.site-header.stuck {
+  position: fixed; top: 0;
+  background: rgba(3, 8, 6, .86);
+  backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+}
+.site-header.stuck .header-row { height: 70px; }
+.header-row { transition: height .3s var(--ease); }
+.nav > a:not(.nav-cta).active { color: var(--lime); }
+
+/* ───────── Titulares animados por línea ───────── */
+.js:not(.ready) h1, .js:not(.ready) h2 { opacity: 0; animation: hfail .01s 2.5s forwards; }
+@keyframes hfail { to { opacity: 1; } }
+.ln { display: block; overflow: hidden; padding: .26em 0 .1em; margin: -.26em 0 -.1em; }
+.ln > span { display: block; transform: translateY(115%); transition: transform 1.05s var(--ease); transition-delay: calc(var(--i, 0) * 110ms); }
+.h-in .ln > span { transform: none; }
+
+/* ───────── Botones: brillo + sensación táctil ───────── */
+.button-primary, .nav-cta, .submit-button, .season-card > a, .metrikas-copy > a { position: relative; overflow: hidden; }
+.button-primary::before, .nav-cta::before, .submit-button::before, .season-card > a::after, .metrikas-copy > a::before {
+  position: absolute; inset: 0; content: ""; pointer-events: none;
+  background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .65) 50%, transparent 68%);
+  transform: translateX(-130%); transition: transform .8s var(--ease);
+}
+.button-primary:hover::before, .nav-cta:hover::before, .submit-button:hover::before,
+.season-card > a:hover::after, .metrikas-copy > a:hover::before { transform: translateX(130%); }
+.button:active, .nav-cta:active, .submit-button:active { transform: scale(.97); }
+:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+.intro :focus-visible, .categories :focus-visible, .awards :focus-visible, .registration :focus-visible { outline-color: var(--forest); }
+
+/* ───────── Tarjetas: luz que sigue el cursor ───────── */
+.glass-card { position: relative; }
+.glass-card::after {
+  position: absolute; inset: 0; content: ""; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(173, 255, 57, .15), transparent 60%);
+}
+@media (hover: hover) { .glass-card:hover::after { opacity: 1; } }
+
+/* ───────── Hero ───────── */
+.hero-spot {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(560px circle at var(--hx, 74%) var(--hy, 46%), rgba(173, 255, 57, .17), transparent 62%);
+}
+.hero-giant {
+  position: absolute; z-index: 1; left: 50%; bottom: -3%; pointer-events: none; user-select: none; white-space: nowrap;
+  transform: translate3d(calc(-50% + var(--px, 0px)), calc(var(--py, 0px) + var(--sy, 0px)), 0);
+  font: 400 clamp(14rem, 42vw, 40rem)/.8 var(--display); letter-spacing: .03em;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(173, 255, 57, .2);
+}
+.hero-chips span {
+  position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px;
+  border: 1px solid var(--line-bright); background: rgba(3, 8, 6, .7);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
+  animation: float 6s ease-in-out infinite;
+}
+.hero-chips span::before { width: 8px; height: 8px; content: ""; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+.hero-chips .c1 { top: 205px; right: 7%; }
+.hero-chips .c2 { top: 205px; right: 27%; animation-delay: -3s; }
+@keyframes float { 50% { transform: translateY(-12px); } }
+@media (max-width: 1280px) { .hero-chips { display: none; } }
+.hero h1 { position: relative; z-index: 2; }
+.season-card { transition: transform .4s var(--ease); }
+
+/* ───────── Cifras ───────── */
+.stats { padding: 84px 0 72px; background: linear-gradient(180deg, var(--bg-soft), var(--bg-deep)); border-bottom: 1px solid var(--line); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.stats-grid > div { padding: 6px 30px; border-left: 1px solid var(--line); }
+.stats-grid > div:first-child { padding-left: 0; border-left: 0; }
+.stats strong {
+  display: block; font: 400 clamp(76px, 10vw, 150px)/.85 var(--display); font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--white) 20%, var(--lime)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stats span { display: block; margin-top: 14px; color: #8fa094; font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+
+/* ───────── Ruta a la copa ───────── */
+.route { max-width: 960px; margin-top: 10px; padding: 34px 0 6px; }
+.route-track { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 0; padding: 30px 0 0; list-style: none; }
+.route-track::before, .route-track::after { position: absolute; top: 5px; left: 0; height: 2px; content: ""; }
+.route-track::before { width: 100%; background: var(--line); }
+.route-track::after { width: 100%; background: linear-gradient(90deg, var(--lime), var(--lime-soft)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.6s var(--ease) .25s; }
+.route.visible .route-track::after { transform: scaleX(1); }
+.route-track li { position: relative; padding: 22px 18px; border: 1px solid var(--line); background: rgba(255, 255, 255, .03); transition: transform .35s var(--ease), border-color .25s, background .25s; }
+.route-track li:hover { transform: translateY(-5px); border-color: var(--lime); background: rgba(173, 255, 57, .06); }
+.route-track li::before { position: absolute; top: -33px; left: 18px; width: 16px; height: 16px; content: ""; background: var(--bg-deep); border: 2px solid var(--lime); }
+.route-track li > span { position: absolute; top: 14px; right: 16px; color: var(--lime); font: 400 22px/1 var(--display); opacity: .75; }
+.route-track li:not(.cup) strong { padding-right: 28px; }
+.route-track strong { display: block; font: 400 30px/1 var(--display); letter-spacing: .02em; }
+.route-track small { display: block; margin-top: 8px; color: #9fb0a4; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.route-track li.cup { border-color: var(--lime); background: var(--lime); color: #061009; }
+.route-track li.cup::before { background: var(--lime); border-color: var(--lime); box-shadow: 0 0 14px rgba(173, 255, 57, .7); }
+.route-track li.cup > span { color: #061009; }
+.route-track li.cup small { color: #244020; }
+
+/* ───────── Podio visual ───────── */
+.podium { display: grid; grid-template-columns: 1fr 1.14fr 1fr; align-items: end; gap: 8px; min-height: 270px; margin: 27px 0; }
+.pod {
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; height: var(--h); padding: 16px 12px;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .025));
+  text-align: center; clip-path: inset(0 0 0 0);
+  transition: clip-path 1s var(--ease), transform .35s var(--ease), border-color .25s;
+}
+.pod:hover { transform: translateY(-5px); border-color: var(--lime); }
+.pod.first { --h: 268px; border-color: var(--lime); background: linear-gradient(180deg, var(--lime), #7fd21f); color: #061009; box-shadow: 0 24px 60px rgba(105, 220, 42, .22); }
+.pod.second { --h: 206px; }
+.pod.third { --h: 160px; }
+.pod b { display: block; margin-bottom: 8px; color: var(--lime); font: 400 54px/.9 var(--display); }
+.pod.first b { color: #061009; }
+.pod.second b { color: var(--oyster); }
+.pod.third b { color: #c9a77f; }
+.pod strong { font-size: 13px; }
+.pod span { color: #91a096; font-size: 11px; line-height: 1.4; }
+.pod.first span { color: #244020; }
+.js .awards-panel:not(.in) .pod { clip-path: inset(100% 0 0 0); }
+.awards-panel .pod.second { transition-delay: .15s, 0s, 0s; }
+.awards-panel .pod.first { transition-delay: .3s, 0s, 0s; }
+
+/* ───────── Banda gigante ───────── */
+.mega { overflow: hidden; padding: 30px 0; background: var(--forest); border-block: 1px solid var(--line-bright); white-space: nowrap; }
+.mega-track { display: inline-flex; align-items: center; gap: 46px; font: 400 clamp(84px, 14vw, 190px)/.9 var(--display); animation: megaRun 52s linear infinite reverse; }
+.mega-track span { color: var(--white); }
+.mega-track .o { color: transparent; -webkit-text-stroke: 1.5px var(--lime); }
+.mega-track i { color: var(--lime); font-size: .28em; font-style: normal; }
+@keyframes megaRun { to { transform: translateX(-50%); } }
+
+/* ───────── Categorías: relieve al pasar el cursor ───────── */
+.category-card { position: relative; overflow: hidden; transition: transform .4s var(--ease), border-color .25s, background .25s, box-shadow .3s; }
+.category-card:not(.featured):hover { box-shadow: 0 34px 70px rgba(41, 47, 38, .2); }
+.category-card strong b { transition: transform .5s var(--ease); transform-origin: left bottom; }
+.category-card:hover strong b { transform: scale(1.06); }
+.category-card span { transition: letter-spacing .3s var(--ease), color .2s; }
+.category-card:hover span { letter-spacing: .12em; }
+
+/* ───────── Formato: tarjetas con vida ───────── */
+.format-card, .academy-facts article, .operation-strip > div { transition: transform .4s var(--ease), border-color .25s, background .25s; }
+.format-card:hover { transform: translateY(-6px); border-color: var(--line-bright); }
+.academy-facts article:hover { transform: translateY(-6px); }
+
+/* ───────── Formulario: progreso y confirmación ───────── */
+.registration-form { position: relative; overflow: hidden; }
+.form-progress { height: 4px; margin: -8px 0 26px; background: rgba(10, 36, 22, .1); overflow: hidden; }
+.form-progress i { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--green-deep), var(--lime)); transform: scaleX(0); transform-origin: 0 50%; transition: transform .5s var(--ease); }
+.category-options span { transition: background .2s, color .2s, border-color .2s, transform .2s; }
+.category-options label:hover span { border-color: var(--forest); transform: translateY(-2px); }
+.registration-form input:focus, .registration-form textarea:focus { transform: translateY(-1px); }
+.form-done {
+  position: absolute; z-index: 5; inset: 0; display: grid; place-content: center; justify-items: center; gap: 16px; padding: 34px; text-align: center;
+  background: var(--forest); color: #fff; opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s;
+}
+.registration-form.done .form-done { opacity: 1; visibility: visible; }
+.form-done .check { display: grid; place-items: center; width: 96px; height: 96px; background: var(--lime); color: #061009; }
+.registration-form.done .check { animation: burst 1.2s var(--ease) .1s; }
+@keyframes burst { 0% { transform: scale(.4); box-shadow: 0 0 0 0 rgba(173, 255, 57, .7); } 60% { transform: scale(1.08); } 100% { transform: scale(1); box-shadow: 0 0 0 44px rgba(173, 255, 57, 0); } }
+.form-done svg { width: 46px; height: 46px; }
+.form-done path { stroke-dasharray: 44; stroke-dashoffset: 44; }
+.registration-form.done .form-done path { animation: draw .6s ease .5s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.form-done h3 { margin: 0; font: 400 clamp(44px, 6vw, 64px)/.9 var(--display); text-transform: uppercase; }
+.form-done h3 { color: var(--lime); }
+.form-done p { max-width: 340px; margin: 0; color: #c3cec6; }
+.form-again { min-height: 52px; padding: 0 24px; border: 1px solid var(--line-bright); background: transparent; color: #fff; font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: .2s; }
+.form-again:hover { border-color: var(--lime); color: var(--lime); }
+
+/* ───────── Competencia ───────── */
+.competition-tabs button { transition: background .2s, color .2s, border-color .2s; }
+.match-card, .public-team-card { transition: transform .3s var(--ease), border-color .25s, background .25s; }
+.match-card:hover, .public-team-card:hover { transform: translateX(4px); border-color: var(--line-bright); background: rgba(173, 255, 57, .05); }
+.competition-content.ready { animation: fadeUp .6s var(--ease); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ───────── Responsive ───────── */
+@media (max-width: 1080px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
+  .stats-grid > div:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 760px) {
+  .site-header.stuck .header-row { height: 62px; }
+  .site-header.stuck .nav { top: 78px; }
+  .stats { padding: 60px 0 52px; }
+  .stats-grid > div { padding: 6px 16px; }
+  .stats strong { font-size: clamp(64px, 20vw, 92px); }
+  .route-track { grid-template-columns: 1fr; gap: 10px; padding: 0 0 0 14px; }
+  .route-track::before, .route-track::after { top: 0; left: 6px; width: 2px; height: 100%; }
+  .route-track::after { transform: scaleY(0); transform-origin: 50% 0; background: linear-gradient(180deg, var(--lime), var(--lime-soft)); }
+  .route.visible .route-track::after { transform: scaleY(1); }
+  .route-track li { padding: 18px 18px 18px 34px; }
+  .route-track li::before { top: 22px; left: -15px; }
+  .route-track li > span { top: 16px; }
+  .route-track li:not(.cup) strong { padding-right: 34px; }
+  .podium { gap: 6px; }
+  .pod { padding: 12px 6px; }
+  .pod b { font-size: 42px; }
+  .pod span { font-size: 10px; }
+  .pod.first { --h: 250px; } .pod.second { --h: 196px; } .pod.third { --h: 154px; }
+  .mega { padding: 22px 0; }
+}
+@media (max-width: 420px) { .pod strong { font-size: 11px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ln > span { transform: none; transition: none; }
+  .js:not(.ready) h1, .js:not(.ready) h2 { opacity: 1; animation: none; }
+  .js .awards-panel:not(.in) .pod { clip-path: none; }
+  .route-track::after { transform: none; transition: none; }
+  .hero-chips span, .mega-track, .competition-content.ready { animation: none; }
+}
