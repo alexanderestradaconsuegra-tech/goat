@@ -41,6 +41,8 @@
 
   /* Progreso de scroll, header fijo, paralaje del GOAT gigante, enlace activo */
   const bar = $('.progress');
+  const cta = $('.floating-cta');
+  const reg = $('#inscripcion');
   const giant = $('.hero-giant');
   const header = $('.site-header');
   const navLinks = $$('.nav > a[href^="#"]:not(.nav-cta)');
@@ -50,6 +52,10 @@
     bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
     header.classList.toggle('stuck', scrollY > 160);
     if (giant && !reduce && scrollY < innerHeight * 1.5) giant.style.setProperty('--sy', scrollY * 0.14 + 'px');
+    if (cta && reg) {
+      const rr = reg.getBoundingClientRect();
+      cta.classList.toggle('away', rr.top < innerHeight * 0.7 && rr.bottom > 140);
+    }
     const probe = scrollY + innerHeight * 0.35;
     let current = null;
     sections.forEach((s) => { if (s.offsetTop <= probe) current = s.id; });
@@ -156,6 +162,21 @@
       panel.classList.add('in');
     }
   }
+
+  /* Competencia: pista de scroll en tablas anchas y pestaña activa visible en móvil */
+  function updateScrollHints() {
+    $$('.data-table-wrap').forEach((w) => w.classList.toggle('more', w.scrollWidth - w.clientWidth - w.scrollLeft > 4));
+  }
+  const compContent = $('#competition-content');
+  if (compContent) {
+    new MutationObserver(updateScrollHints).observe(compContent, { childList: true });
+    compContent.addEventListener('scroll', updateScrollHints, true);
+    addEventListener('resize', updateScrollHints);
+  }
+  $$('.competition-tabs button').forEach((b) => b.addEventListener('click', () => {
+    const tabs = b.parentElement;
+    tabs.scrollTo({ left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+  }));
 
   /* Formulario: barra de avance y pantalla de confirmación */
   const form = $('#team-form');
