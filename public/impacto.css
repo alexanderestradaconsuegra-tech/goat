@@ -633,3 +633,4 @@ body::after { opacity: .045; }
 .footer-legal a { color: rgba(255, 255, 255, .7); font-size: 12px; text-decoration: none; }
 .footer-legal a:hover { color: var(--lime); text-decoration: underline; text-underline-offset: 3px; }
 .registration-form .form-error { color: #b3261e; }
+.awards-photo img { object-position: 50% 42%; }
