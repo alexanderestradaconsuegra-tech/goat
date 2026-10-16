@@ -1,3 +1,13 @@
+/* ───────── Tipografía y material "cancha": verde bosque, lima y crema ─────────
+   Titulares: Barlow Condensed ExtraBold Italic (se declara como "Goat Display" para que todo lo que
+   usaba --display lo herede). Cuerpo: Outfit. Fuentes alojadas en /fonts. */
+@font-face { font-family: "Goat Display"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/barlow-condensed-latin-900-italic.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/outfit-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/outfit-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/outfit-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/outfit-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 800 900; font-display: swap; src: url("/fonts/outfit-latin-800-normal.woff2") format("woff2"); }
+
 /* GOAT LEAGUE · capa de impacto
    Se carga después de styles.css y usa sus mismos tokens (--lime, --forest, --oyster…). */
 
@@ -18,9 +28,9 @@
 .site-header { transition: background .3s, box-shadow .3s, top .3s; }
 .site-header.stuck {
   position: fixed; top: 0;
-  background: rgba(3, 8, 6, .86);
+  background: rgba(7, 46, 22, .86);
   backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+  box-shadow: 0 10px 40px rgba(7, 46, 22, .35);
 }
 .site-header.stuck .header-row { height: 70px; }
 .header-row { transition: height .3s var(--ease); }
@@ -70,7 +80,7 @@
 }
 .hero-chips span {
   position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px;
-  border: 1px solid var(--line-bright); background: rgba(3, 8, 6, .7);
+  border: 1px solid var(--line-bright); background: rgba(7, 46, 22, .7);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
   animation: float 6s ease-in-out infinite;
@@ -157,7 +167,7 @@
 
 /* ───────── Formulario: progreso y confirmación ───────── */
 .registration-form { position: relative; overflow: hidden; }
-.form-progress { height: 4px; margin: -8px 0 26px; background: rgba(10, 36, 22, .1); overflow: hidden; }
+.form-progress { height: 4px; margin: -8px 0 26px; background: rgba(7, 46, 22, .1); overflow: hidden; }
 .form-progress i { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--green-deep), var(--lime)); transform: scaleX(0); transform-origin: 0 50%; transition: transform .5s var(--ease); }
 .category-options span { transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .category-options label:hover span { border-color: var(--forest); transform: translateY(-2px); }
@@ -198,7 +208,7 @@
   animation: shimmerRows 2.4s linear infinite;
 }
 @keyframes shimmerRows { to { background-position: -120% 0, 0 0; } }
-.empty-state > div { position: relative; max-width: 520px; padding: 34px 30px 30px; border: 1px solid var(--line-bright); border-top: 3px solid var(--lime); background: rgba(6, 16, 10, .78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 30px 80px rgba(0, 0, 0, .4); }
+.empty-state > div { position: relative; max-width: 520px; padding: 34px 30px 30px; border: 1px solid var(--line-bright); border-top: 3px solid var(--lime); background: rgba(7, 46, 22, .78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 30px 80px rgba(7, 46, 22, .4); }
 .empty-state img { width: 76px; opacity: .6; filter: invert(1) drop-shadow(0 0 18px rgba(173, 255, 57, .45)); }
 .empty-state h3 { font-size: 40px; }
 .board-status:not([hidden]) { min-height: 390px; }
@@ -280,7 +290,7 @@
 }
 .format::after {
   right: -10%; bottom: 4%; width: 52vw; height: 52vw; max-width: 720px; max-height: 720px;
-  background: radial-gradient(circle, rgba(46, 160, 88, .6), rgba(10, 36, 22, 0) 68%);
+  background: radial-gradient(circle, rgba(46, 160, 88, .6), rgba(7, 46, 22, 0) 68%);
   animation: orbB 26s ease-in-out infinite alternate;
 }
 @keyframes orbA { to { transform: translate3d(22vw, 26vh, 0) scale(1.15); } }
@@ -298,8 +308,8 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .42),
     inset 0 0 0 1px rgba(255, 255, 255, .09),
-    inset 0 -24px 40px -28px rgba(0, 0, 0, .45),
-    0 34px 60px -26px rgba(0, 0, 0, .75);
+    inset 0 -24px 40px -28px rgba(7, 46, 22, .45),
+    0 34px 60px -26px rgba(7, 46, 22, .75);
 }
 .format .phase-line, .format .operation-strip { overflow: hidden; }
 .format .phase-line i { border-inline-color: rgba(255, 255, 255, .12); }
@@ -309,8 +319,8 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .6),
     inset 0 0 0 1px rgba(173, 255, 57, .45),
-    inset 0 -24px 40px -28px rgba(0, 0, 0, .4),
-    0 40px 70px -26px rgba(0, 0, 0, .8), 0 0 50px -12px rgba(173, 255, 57, .35);
+    inset 0 -24px 40px -28px rgba(7, 46, 22, .4),
+    0 40px 70px -26px rgba(7, 46, 22, .8), 0 0 50px -12px rgba(173, 255, 57, .35);
 }
 /* destello de cristal: franja diagonal que cruza al pasar */
 .format-card::before {
@@ -354,3 +364,101 @@
   .format::before, .format::after { animation: none; }
   .format-card::before { display: none; }
 }
+
+/* ───────── Capa cancha ───────── */
+.academy-facts strong,
+.award-totals strong,
+.awards h2,
+.brand strong,
+.category-card strong,
+.category-rail span,
+.competition h2,
+.data-table .rank,
+.empty-state h3,
+.footer-brand strong,
+.form-done h3,
+.format h2,
+.format-number,
+.format-watermark,
+.glass-stat strong,
+.hero h1,
+.hero-giant,
+.hero-proof b,
+.individual-awards strong,
+.intro h2,
+.match-score,
+.mega-track,
+.metrikas h2,
+.metrikas-copy li span,
+.months strong,
+.nav > a:not(.nav-cta),
+.operation-strip span,
+.phase-line strong,
+.pod b,
+.podium-list b,
+.registration h2,
+.registration-price strong,
+.registration-venue strong,
+.route-track li > span,
+.route-track strong,
+.schedule-time strong,
+.section-heading h2,
+.section-index,
+.stats strong
+{ text-transform: uppercase; }
+h1, h2 { text-transform: uppercase; letter-spacing: -.005em; }
+.ln { padding-right: .16em; margin-right: -.16em; }
+.hero h1 { transform: rotate(-1.8deg); transform-origin: 0 100%; }
+.hero h1 em { text-shadow: 0 0 60px rgba(184, 255, 46, .28); }
+
+/* grano fino sobre todo el sitio */
+body::after {
+  position: fixed; inset: 0; z-index: 3; content: ""; pointer-events: none; opacity: .07;
+  background: url("/grain.svg"); background-size: 220px;
+}
+
+/* decoraciones: trazos de pincel, doodle de corona y líneas de cancha */
+.deco { position: absolute; z-index: 1; display: block; pointer-events: none; background-repeat: no-repeat; background-size: 100% 100%; }
+.slash { background-image: url("/slash.svg"); opacity: .9; }
+.sl-a { top: -6%; left: -4%; width: 150px; height: 70%; transform: rotate(8deg); opacity: .85; }
+.sl-b { right: -3%; bottom: -8%; width: 190px; height: 74%; transform: rotate(-4deg) scaleX(-1); opacity: .8; }
+.sl-c { left: -3%; top: 8%; width: 130px; height: 62%; transform: rotate(6deg); opacity: .55; }
+.crown { background-image: url("/crown.svg"); width: 116px; height: 80px; transform: rotate(10deg); }
+.cr-a { top: 118px; right: 7%; }
+.cr-b { bottom: 90px; left: 3%; opacity: .75; width: 96px; height: 66px; transform: rotate(-9deg); }
+.pitch { background-image: url("/pitch.svg"); opacity: .16; }
+.pt-a { top: -60px; right: -5%; width: 520px; height: 520px; }
+.pt-b { top: -40px; right: -6%; width: 460px; height: 460px; }
+.hero > .deco, .competition > .deco, .format > .deco, .metrikas > .deco { z-index: 1; }
+.hero .hero-grid, .competition > .shell, .format > .shell, .metrikas > .shell { position: relative; z-index: 2; }
+
+/* esquinas redondeadas y botones con presencia */
+.button, .nav-cta, .submit-button, .metrikas-copy > a, .form-again, .hero-actions a { border-radius: 16px; }
+.button-primary, .nav-cta, .submit-button { box-shadow: 0 10px 0 -4px rgba(10, 47, 23, .55), 0 18px 30px -14px rgba(184, 255, 46, .55); }
+.glass-card, .category-card, .awards-panel, .awards-photo, .registration-form, .season-card, .glass-stat, .competition-board,
+.academy-facts, .operation-strip, .registration-note, .hero-proof, .whatsapp-info { border-radius: 24px; }
+.hero-proof { overflow: hidden; }
+.registration-form input, .registration-form textarea, .category-filter select { border-radius: 14px; }
+.eyebrow, .format-chip, .hero-chips span, .competition-tabs button { border-radius: 999px; }
+.competition-tabs button { padding-inline: 16px; }
+.data-table-wrap { border-radius: 0 0 24px 24px; }
+.pod { border-radius: 18px 18px 0 0; }
+
+/* selector de categorías: pastilla con círculo, como el flyer */
+.category-options { gap: 8px; }
+.category-options span {
+  display: flex; align-items: center; justify-content: center; gap: 10px; height: 54px; border-radius: 16px;
+  background: rgba(255, 255, 255, .6); color: var(--forest); font: 400 24px/1 var(--display); letter-spacing: .02em;
+}
+.category-options span::before {
+  width: 20px; height: 20px; flex: none; content: ""; border: 2px solid var(--forest); border-radius: 50%; transition: .2s;
+}
+.category-options input:checked + span::before {
+  border-color: var(--lime); background: var(--lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a2f17' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+.category-options input:focus-visible + span { outline: 3px solid var(--lime); outline-offset: 2px; }
+@media (max-width: 560px) { .category-options { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px) { .hero h1 { transform: rotate(-1.2deg); } .deco.sl-a, .deco.sl-b, .deco.sl-c { width: 90px; opacity: .5; } .cr-a { top: 96px; width: 80px; height: 56px; } .pt-a, .pt-b { width: 320px; height: 320px; } }
+@media (prefers-reduced-motion: reduce) { .hero h1 { transform: none; } }
+
+.empty-state { border-radius: 22px; }
