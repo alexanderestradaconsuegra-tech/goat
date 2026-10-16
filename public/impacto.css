@@ -28,9 +28,9 @@
 .site-header { transition: background .3s, box-shadow .3s, top .3s; }
 .site-header.stuck {
   position: fixed; top: 0;
-  background: rgba(7, 46, 22, .86);
+  background: rgba(4, 11, 7, .86);
   backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 10px 40px rgba(7, 46, 22, .35);
+  box-shadow: 0 10px 40px rgba(4, 11, 7, .35);
 }
 .site-header.stuck .header-row { height: 70px; }
 .header-row { transition: height .3s var(--ease); }
@@ -80,7 +80,7 @@
 }
 .hero-chips span {
   position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px;
-  border: 1px solid var(--line-bright); background: rgba(7, 46, 22, .7);
+  border: 1px solid var(--line-bright); background: rgba(4, 11, 7, .7);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
   animation: float 6s ease-in-out infinite;
@@ -167,7 +167,7 @@
 
 /* ───────── Formulario: progreso y confirmación ───────── */
 .registration-form { position: relative; overflow: hidden; }
-.form-progress { height: 4px; margin: -8px 0 26px; background: rgba(7, 46, 22, .1); overflow: hidden; }
+.form-progress { height: 4px; margin: -8px 0 26px; background: rgba(4, 11, 7, .1); overflow: hidden; }
 .form-progress i { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--green-deep), var(--lime)); transform: scaleX(0); transform-origin: 0 50%; transition: transform .5s var(--ease); }
 .category-options span { transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .category-options label:hover span { border-color: var(--forest); transform: translateY(-2px); }
@@ -208,7 +208,7 @@
   animation: shimmerRows 2.4s linear infinite;
 }
 @keyframes shimmerRows { to { background-position: -120% 0, 0 0; } }
-.empty-state > div { position: relative; max-width: 520px; padding: 34px 30px 30px; border: 1px solid var(--line-bright); border-top: 3px solid var(--lime); background: rgba(7, 46, 22, .78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 30px 80px rgba(7, 46, 22, .4); }
+.empty-state > div { position: relative; max-width: 520px; padding: 34px 30px 30px; border: 1px solid var(--line-bright); border-top: 3px solid var(--lime); background: rgba(4, 11, 7, .78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 30px 80px rgba(4, 11, 7, .4); }
 .empty-state img { width: 76px; opacity: .6; filter: invert(1) drop-shadow(0 0 18px rgba(173, 255, 57, .45)); }
 .empty-state h3 { font-size: 40px; }
 .board-status:not([hidden]) { min-height: 390px; }
@@ -290,7 +290,7 @@
 }
 .format::after {
   right: -10%; bottom: 4%; width: 52vw; height: 52vw; max-width: 720px; max-height: 720px;
-  background: radial-gradient(circle, rgba(46, 160, 88, .6), rgba(7, 46, 22, 0) 68%);
+  background: radial-gradient(circle, rgba(46, 160, 88, .6), rgba(4, 11, 7, 0) 68%);
   animation: orbB 26s ease-in-out infinite alternate;
 }
 @keyframes orbA { to { transform: translate3d(22vw, 26vh, 0) scale(1.15); } }
@@ -308,8 +308,8 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .42),
     inset 0 0 0 1px rgba(255, 255, 255, .09),
-    inset 0 -24px 40px -28px rgba(7, 46, 22, .45),
-    0 34px 60px -26px rgba(7, 46, 22, .75);
+    inset 0 -24px 40px -28px rgba(4, 11, 7, .45),
+    0 34px 60px -26px rgba(4, 11, 7, .75);
 }
 .format .phase-line, .format .operation-strip { overflow: hidden; }
 .format .phase-line i { border-inline-color: rgba(255, 255, 255, .12); }
@@ -319,8 +319,8 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .6),
     inset 0 0 0 1px rgba(173, 255, 57, .45),
-    inset 0 -24px 40px -28px rgba(7, 46, 22, .4),
-    0 40px 70px -26px rgba(7, 46, 22, .8), 0 0 50px -12px rgba(173, 255, 57, .35);
+    inset 0 -24px 40px -28px rgba(4, 11, 7, .4),
+    0 40px 70px -26px rgba(4, 11, 7, .8), 0 0 50px -12px rgba(173, 255, 57, .35);
 }
 /* destello de cristal: franja diagonal que cruza al pasar */
 .format-card::before {
@@ -469,9 +469,6 @@ body::after {
    · vidrio: tarjetas de datos, más claras y con borde de luz visible
    · crema: lo que hay que leer primero (jornadas, estados vacíos), como el formulario del flyer
    · lima: solo la acción o el dato principal */
-.competition { background: radial-gradient(ellipse 70% 50% at 85% 0%, rgba(30, 120, 62, .55), transparent 70%), linear-gradient(160deg, #083a1f, #042513 82%); }
-.format { background: radial-gradient(ellipse 60% 45% at 10% 10%, rgba(30, 120, 62, .5), transparent 70%), linear-gradient(150deg, #083c20, #042613 80%); }
-.format::after { background: radial-gradient(circle, rgba(60, 190, 110, .45), rgba(10, 36, 22, 0) 68%); }
 
 .format-card, .route-track li:not(.cup) {
   background:
@@ -517,3 +514,57 @@ body::after {
 .board-toolbar { border-bottom-color: rgba(255, 255, 255, .18); }
 .competition-tabs button { color: rgba(255, 255, 255, .8); }
 .glass-stat { background: linear-gradient(145deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .07)); border-color: rgba(255, 255, 255, .22); }
+
+/* ───────── Paleta premium: obsidiana, hueso, lima puntual y oro ─────────
+   Obsidiana (verde casi negro) como fondo único de las secciones oscuras; hueso limpio en las claras;
+   esmeralda solo como acento; lima reservado para acción y dato principal; oro champagne para premios. */
+.stats, .competition, .format, .metrikas { background: radial-gradient(ellipse 60% 50% at 88% 0%, rgba(15, 107, 58, .30), transparent 70%), linear-gradient(180deg, #08140d, #050d08); }
+.stats { background: linear-gradient(180deg, #08140d, #07110b); border-bottom: 1px solid var(--line); }
+footer { background: #040b07; }
+.intro, .categories, .awards, .registration { background: linear-gradient(180deg, #f7f4ec, #f0ebe0); }
+.categories, .registration { background: linear-gradient(180deg, #f1ece1, #ebe5d8); }
+
+/* lima con medida: números en hueso, el lima queda para el dato que manda */
+.stats strong { background: none; color: #f3efe6; -webkit-text-fill-color: #f3efe6; }
+.stats > .shell > div > div:first-child strong, .stats-grid > div:first-child strong { color: var(--lime); -webkit-text-fill-color: var(--lime); }
+.stats span { color: rgba(255, 255, 255, .62); }
+.format-number { background: none; -webkit-text-fill-color: #f3efe6; color: #f3efe6; filter: none; }
+.format-card.lime .format-number { -webkit-text-fill-color: #061009; color: #061009; }
+
+/* vidrio sobre obsidiana: ya contrasta, no necesita ser más claro */
+.format::before { background: radial-gradient(circle, rgba(184, 255, 46, .16), rgba(184, 255, 46, 0) 68%); }
+.format::after { background: radial-gradient(circle, rgba(15, 107, 58, .5), rgba(15, 107, 58, 0) 68%); }
+.format-card, .route-track li:not(.cup) {
+  background:
+    radial-gradient(260px circle at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, .13), transparent 62%),
+    linear-gradient(150deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .03) 50%, rgba(15, 107, 58, .12));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 0 0 1px rgba(255, 255, 255, .11), 0 34px 60px -28px rgba(0, 0, 0, .8);
+}
+.competition-board { background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .025)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px rgba(255, 255, 255, .1), 0 40px 80px -30px rgba(0, 0, 0, .8); }
+.glass-stat { background: linear-gradient(145deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .03)); border-color: rgba(255, 255, 255, .13); }
+.board-toolbar { border-bottom-color: rgba(255, 255, 255, .12); }
+.format .phase-line, .empty-state > div { background: linear-gradient(150deg, #f8f5ed, #ebe5d8); }
+.format .phase-line i { color: var(--emerald); }
+
+/* oro champagne: solo en la copa, el podio y los premios */
+.route-track li.cup { background: linear-gradient(150deg, #efdca4, #c9a24f); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 30px 60px -22px rgba(201, 162, 79, .5); }
+.route-track li.cup::before { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 14px rgba(216, 188, 122, .7); }
+.route-track li.cup small, .route-track li.cup > span { color: #4a3a12; }
+.pod.first { border-color: var(--gold); background: linear-gradient(180deg, #f0dea6, #c9a24f); color: #2b2108; box-shadow: 0 24px 60px rgba(201, 162, 79, .28); }
+.pod.first b { color: #2b2108; } .pod.first span { color: #5a4515; }
+.pod.second b { color: #dfe3e6; } .pod.third b { color: #c98f5a; }
+.award-totals strong { color: var(--gold); }
+.individual-awards { border: 1px solid rgba(216, 188, 122, .4); background: rgba(216, 188, 122, .07); border-radius: 16px; }
+.individual-awards strong { color: var(--gold); }
+.individual-awards > span { color: rgba(255, 255, 255, .6); }
+
+/* menos ruido decorativo */
+body::after { opacity: .045; }
+.slash { opacity: .5; }
+.sl-a { opacity: .55; } .sl-b { opacity: .5; } .sl-c { opacity: .32; }
+.metrikas > .deco { display: none; }
+.pitch { opacity: .1; }
+
+/* pie: el separador no debe romperse en otra línea */
+.footer-top strong > span { display: inline; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; }
+@media (max-width: 760px) { .deco.sl-b { display: none; } .deco.sl-a { width: 70px; opacity: .4; } }
