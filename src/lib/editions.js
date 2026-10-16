@@ -8,8 +8,8 @@ export const EDITIONS = [
 
 export const CATEGORIES = ["Sub 7", "Sub 9", "Sub 11", "Sub 13", "Sub 15"];
 
-/** Cupos por categoría: máximo 8 equipos por defecto; se cambia con GOAT_CAPACITY_PER_CATEGORY. */
-export const DEFAULT_CAPACITY = 8;
+/** Cupos por categoría: máximo 6 equipos por defecto (2 grupos de 3); se cambia con GOAT_CAPACITY_PER_CATEGORY. */
+export const DEFAULT_CAPACITY = 6;
 export function capacityPerCategory() {
   const value = Number.parseInt(process.env.GOAT_CAPACITY_PER_CATEGORY || "", 10);
   return Number.isFinite(value) && value > 0 ? value : DEFAULT_CAPACITY;

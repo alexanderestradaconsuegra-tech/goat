@@ -27,6 +27,6 @@ En Authentication > URL Configuration agregar el dominio del admin a Site URL / 
 - Auto-deploy: activar el webhook de GitHub en cada servicio.
 
 ## Cupos por categoría y fechas
-- `GOAT_CAPACITY_PER_CATEGORY` (opcional): máximo de equipos confirmados por categoría en cada fecha. Por defecto 8. Cuando una categoría llega a ese número, se bloquea; si todas se llenan, el formulario deriva la inscripción a la próxima fecha.
+- `GOAT_CAPACITY_PER_CATEGORY` (opcional): máximo de equipos confirmados por categoría en cada fecha. Por defecto 6 (2 grupos de 3). Cuando una categoría llega a ese número, se bloquea; si todas se llenan, el formulario deriva la inscripción a la próxima fecha.
 - Los cupos se cuentan con los equipos de la tabla `goat_teams` (equipos confirmados). Si esa tabla tiene una columna `edition` (por ejemplo `2026-12`), se cuenta por fecha; sin ella, todos cuentan para la primera.
 - Las fechas están en `src/lib/editions.js` (y en `public/edicion.js` como respaldo).

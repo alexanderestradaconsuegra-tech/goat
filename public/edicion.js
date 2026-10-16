@@ -77,7 +77,20 @@
     }
   }
 
+  /* Ventana del sorteo: 48 a 72 horas antes de la primera fecha activa */
+  function drawWindow() {
+    const out = document.querySelector('[data-draw-window]');
+    if (!out) return;
+    const now = Date.now();
+    const next = editions.find((e) => new Date(e.start).getTime() > now);
+    if (!next) return;
+    const start = new Date(next.start).getTime();
+    const f = new Intl.DateTimeFormat('es-CL', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'America/Santiago' });
+    out.textContent = 'Entre el ' + f.format(new Date(start - 72 * 3600e3)) + ' y el ' + f.format(new Date(start - 48 * 3600e3)) + ' (48 a 72 horas antes del ' + next.label + '). La hora exacta se avisa por WhatsApp y redes.';
+  }
+
   tick();
+  drawWindow();
   setInterval(tick, 1000);
 
   if ('fetch' in window) {
@@ -90,6 +103,7 @@
           openSlug = d.open;
           applyAvailability();
           tick();
+          drawWindow();
         } else { applyAvailability(); }
       })
       .catch(applyAvailability);

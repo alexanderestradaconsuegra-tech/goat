@@ -56,6 +56,7 @@
         <a href="#competencia">Competencia</a>
         <a href="#categorias">Categorías</a>
         <a href="#formato">Formato</a>
+        <a href="#sorteo">Sorteo</a>
         <a href="#premios">Premios</a>
         <a href="#galeria">Galería</a>
         <a class="nav-cta" href="#inscripcion">Inscribir equipo <i>↗</i></a>
@@ -244,6 +245,68 @@
       </div>
     </section>
 
+    <section class="competition sorteo section" id="sorteo" aria-labelledby="draw-title">
+      <i class="deco slash sl-c"></i>
+      <div class="shell">
+        <header class="competition-heading reveal">
+          <div>
+            <span class="eyebrow">Sorteo oficial</span>
+            <h2 id="draw-title">TRANSPARENCIA TOTAL.<br><em>SORTEO EN VIVO.</em></h2>
+          </div>
+          <p>Cada categoría se sortea por separado, en directo y con los nombres de las academias inscritas, 48 a 72 horas antes de la primera fecha.</p>
+        </header>
+
+        <ol class="draw-steps">
+          <li class="glass-card reveal">
+            <span class="n">01</span>
+            <h3>Llenado de bombos</h3>
+            <p>Cada categoría (Sub 7 a Sub 15) se sortea por separado una vez cerrados sus 6 cupos.</p>
+            <div class="bombo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </li>
+          <li class="glass-card reveal">
+            <span class="n">02</span>
+            <h3>Grupos del sábado</h3>
+            <p>Dos grupos de 3 equipos por categoría. Todos juegan contra todos dentro de su grupo.</p>
+            <div class="groups" aria-hidden="true">
+              <div><b>Grupo A</b><span>A1</span><span>A2</span><span>A3</span></div>
+              <div><b>Grupo B</b><span>B1</span><span>B2</span><span>B3</span></div>
+            </div>
+          </li>
+          <li class="glass-card reveal">
+            <span class="n">03</span>
+            <h3>Publicación del fixture</h3>
+            <p>Con el sorteo hecho se asignan las canchas (1, 2, 3 o 4) y los horarios exactos de cada partido, en bloques de mañana y tarde.</p>
+            <div class="canchas" aria-hidden="true"><span>C1</span><span>C2</span><span>C3</span><span>C4</span></div>
+          </li>
+        </ol>
+
+        <div class="draw-live reveal">
+          <div class="draw-live-copy">
+            <span class="live-badge"><i></i> En vivo</span>
+            <h3>Sorteo transmitido en directo</h3>
+            <p>Lo hacemos en vivo por <b>Instagram Live</b> y <b>YouTube</b>, con los nombres de las academias inscritas, para que todos los clubes vean el resultado al mismo tiempo y no haya reclamos.</p>
+            <ul class="draw-facts">
+              <li><b>Cuándo</b><span data-draw-window>48 a 72 horas antes de la primera fecha</span></li>
+              <li><b>Dónde</b><span>Instagram Live y YouTube. El enlace se avisa por WhatsApp a los clubes inscritos.</span></li>
+              <li><b>Después del live</b><span>El cuadro de partidos y horarios se sube de inmediato a <b>goatleague.cl</b> en formato digital.</span></li>
+            </ul>
+            <div class="draw-links" id="draw-links" hidden></div>
+            <a class="draw-cta" href="#competencia">Ver partidos y horarios <i>↗</i></a>
+          </div>
+          <div class="draw-demo" id="draw-demo">
+            <div class="demo-head"><b>Así funciona</b><span>Demostración con equipos de ejemplo</span></div>
+            <div class="demo-pool" id="demo-pool" aria-hidden="true"></div>
+            <div class="demo-groups">
+              <div><b>Grupo A</b><ol id="demo-a"><li></li><li></li><li></li></ol></div>
+              <div><b>Grupo B</b><ol id="demo-b"><li></li><li></li><li></li></ol></div>
+            </div>
+            <button type="button" class="demo-btn" id="demo-btn">Sortear (demostración)</button>
+            <p class="demo-note" id="demo-note" role="status" aria-live="polite">El sorteo oficial se hace en vivo, no en esta página.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="awards section" id="premios">
       <div class="shell">
         <header class="awards-heading reveal">
@@ -405,5 +468,6 @@
   <script src="/impacto.js" defer></script>
   <script src="/galeria.js" defer></script>
   <script src="/edicion.js" defer></script>
+  <script src="/sorteo.js" defer></script>
 </body>
 </html>
