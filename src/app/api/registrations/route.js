@@ -17,10 +17,15 @@ export async function POST(request) {
   const categories = Array.isArray(payload.categories) ? payload.categories.map(String).filter(Boolean) : [];
   const message = String(payload.message || "").trim();
   const website = String(payload.website || "").trim();
+  const consent = payload.consent && typeof payload.consent === "object" ? payload.consent : {};
 
   if (website) return json({ ok: true });
   if (!teamName || !managerName || !whatsapp || !categories.length) {
     return json({ error: "Faltan datos obligatorios." }, 400);
+  }
+
+  if (consent.terms !== true || consent.guardians !== true) {
+    return json({ error: "Debes aceptar los terminos y la autorizacion de los apoderados." }, 400);
   }
 
   const phoneDigits = whatsapp.replace(/\D/g, "");
@@ -36,7 +41,7 @@ export async function POST(request) {
       manager_name: managerName,
       whatsapp,
       categories,
-      message
+      message: `${message}${message ? "\n\n" : ""}[Consentimiento ${String(consent.version || "v1").slice(0, 20)}: terminos+privacidad y autorizacion de apoderados (datos e imagen) aceptados el ${new Date().toISOString()}]`
     }
   });
 

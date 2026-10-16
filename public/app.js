@@ -50,6 +50,8 @@ form.addEventListener('submit', async (event) => {
   const categories = data.getAll('category').map(String);
   const message = String(data.get('message') || '').trim();
   const website = String(data.get('website') || '').trim();
+  const consentTerms = data.get('consent_terms') === 'on';
+  const consentGuardians = data.get('consent_guardians') === 'on';
   const phoneDigits = whatsapp.replace(/\D/g, '');
 
   if (!teamName || !managerName || !whatsapp) {
@@ -62,6 +64,11 @@ form.addEventListener('submit', async (event) => {
   }
   if (!categories.length) {
     formError.textContent = 'Selecciona al menos una categoría.';
+    return;
+  }
+
+  if (!consentTerms || !consentGuardians) {
+    formError.textContent = 'Debes aceptar los términos y la declaración de autorización de los apoderados para continuar.';
     return;
   }
 
@@ -78,7 +85,8 @@ form.addEventListener('submit', async (event) => {
         whatsapp,
         categories,
         message,
-        website
+        website,
+        consent: { terms: consentTerms, guardians: consentGuardians, version: '2026-10-v1' }
       })
     });
     const result = await response.json().catch(() => ({}));

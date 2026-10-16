@@ -1,4 +1,4 @@
-const FALLBACK_URL = "https://gsvnshhisqsqjyhugmldp.supabase.co";
+const FALLBACK_URL = "https://gsvnshhisqsjyhugmldp.supabase.co";
 const FALLBACK_PUBLISHABLE_KEY = "sb_publishable_vsgceztoofukgD8xvFyw3A_5FjPJhmz";
 
 function getConfig() {
@@ -17,6 +17,10 @@ function getConfig() {
     throw new Error("Supabase no esta configurado en este despliegue.");
   }
   return { url: url.replace(/\/$/, ""), key };
+}
+
+export function supabasePublicUrl() {
+  return getConfig().url;
 }
 
 export async function supabaseRest(path, options = {}) {

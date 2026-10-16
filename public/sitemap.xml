@@ -6,4 +6,24 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://goatleague2026.vercel.app/terminos.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://goatleague2026.vercel.app/privacidad.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://goatleague2026.vercel.app/autorizacion-imagen.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://goatleague2026.vercel.app/retiro-de-imagen.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.3</priority>
+  </url>
 </urlset>
