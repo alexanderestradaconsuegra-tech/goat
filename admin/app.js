@@ -191,6 +191,7 @@ function renderAll() {
   renderSettings();
   renderDelegates();
   populateSelects();
+  if (typeof renderDraw === 'function') renderDraw();
 }
 
 function renderOverview() {
@@ -206,13 +207,47 @@ function renderOverview() {
   ].map(([label, value, note], index) => `<article class="surface metric ${index === 3 ? 'highlight' : ''}"><span>${esc(label)}</span><strong>${esc(value)}</strong><small>${esc(note)}</small></article>`).join('');
   const recent = state.registrations.slice(0, 5);
   $('#recent-registrations').innerHTML = recent.length ? recent.map((item) => `<div class="list-row"><div><strong>${esc(item.team_name)}</strong><small>${esc(item.manager_name)} · ${esc(item.categories.join(', '))}</small></div>${statusLabel(item.status)}</div>`).join('') : emptyState('Las nuevas solicitudes aparecerán aquí.');
+  renderCapacity();
   $('#payment-summary').innerHTML = `<div class="money-stack"><div><span>Total comprometido</span><strong>${money(totalDue)}</strong></div><div class="accent"><span>Total abonado</span><strong>${money(totalPaid)}</strong></div><div><span>Saldo pendiente</span><strong>${money(totalDue - totalPaid)}</strong></div></div>`;
+}
+
+const EDITION_LABELS = { '2026-11': '7 y 8 nov', '2026-12': '5 y 6 dic' };
+function registrationNotes(item) {
+  const raw = String(item.message || '');
+  const edition = /\[Edición ([0-9-]+)\]/.exec(raw);
+  const consent = /\[Consentimiento ([^:\]]+):/.exec(raw);
+  const clean = raw.replace(/\[Edición[^\]]*\]/g, '').replace(/\[Consentimiento[^\]]*\]/g, '').trim();
+  const badges = [
+    edition ? `<span class="tag tag-date">${esc(EDITION_LABELS[edition[1]] || edition[1])}</span>` : '',
+    consent ? `<span class="tag tag-ok" title="Aceptó términos y declaró autorización de apoderados">Consentimiento ${esc(consent[1])}</span>` : '<span class="tag tag-warn" title="Inscripción anterior al consentimiento digital">Sin consentimiento digital</span>'
+  ].join('');
+  return `<br>${badges}${clean ? `<br><small>${esc(clean)}</small>` : ''}`;
+}
+
+const CAPACITY = 6;
+const CATEGORY_LIST = ['Sub 7', 'Sub 9', 'Sub 11', 'Sub 13', 'Sub 15'];
+const EDITIONS = [
+  { slug: '2026-11', label: '7 y 8 de noviembre', name: 'Primera fecha', start: '2026-11-07T09:00:00-03:00', end: '2026-11-08T14:00:00-03:00' },
+  { slug: '2026-12', label: '5 y 6 de diciembre', name: 'Cierre de año', start: '2026-12-05T09:00:00-03:00', end: '2026-12-06T14:00:00-03:00' }
+];
+function renderCapacity() {
+  $('#capacity-board').innerHTML = CATEGORY_LIST.map((cat) => {
+    const taken = state.teams.filter((team) => team.category === cat).length;
+    const pct = Math.min(100, Math.round((taken / CAPACITY) * 100));
+    return `<div class="cap-row"><b>${esc(cat)}</b><div class="bar"><i style="width:${pct}%" class="${taken >= CAPACITY ? 'full' : ''}"></i></div><span>${taken}/${CAPACITY}</span>${taken >= CAPACITY ? '<em>Completo</em>' : ''}</div>`;
+  }).join('') + '<p class="form-hint">Cuenta equipos confirmados en la competencia. El tope de 6 por categoría se aplica también en la web pública.</p>';
+  const now = Date.now();
+  $('#editions-board').innerHTML = EDITIONS.map((edition) => {
+    const left = Math.ceil((new Date(edition.start).getTime() - now) / 86400000);
+    const status = new Date(edition.end).getTime() < now ? 'Finalizada' : left > 0 ? `Faltan ${left} día${left === 1 ? '' : 's'}` : 'En juego';
+    return `<div class="list-row"><div><strong>${esc(edition.name)}</strong><small>${esc(edition.label)}</small></div><span class="tag tag-date">${esc(status)}</span></div>`;
+  }).join('');
 }
 
 function renderRegistrations() {
   const filter = $('#registration-filter')?.value || 'all';
   const items = filter === 'all' ? state.registrations : state.registrations.filter((item) => item.status === filter);
-  $('#registrations-table').innerHTML = table(['Academia', 'Responsable', 'WhatsApp', 'Categorías', 'Fecha', 'Estado', 'Acción'], items.map((item) => `<tr><td><strong>${esc(item.team_name)}</strong>${item.message ? `<br><small>${esc(item.message)}</small>` : ''}</td><td>${esc(item.manager_name)}</td><td><a href="https://wa.me/${esc(item.whatsapp.replace(/\D/g, ''))}" target="_blank" rel="noopener">${esc(item.whatsapp)}</a></td><td>${esc(item.categories.join(', '))}</td><td>${dateTime(item.created_at)}</td><td><select class="inline-select" data-registration-status="${item.id}"><option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pendiente</option><option value="contacted" ${item.status === 'contacted' ? 'selected' : ''}>Contactada</option><option value="approved" ${item.status === 'approved' ? 'selected' : ''}>Aprobada</option><option value="rejected" ${item.status === 'rejected' ? 'selected' : ''}>Rechazada</option></select></td><td><button class="mini-button" data-save-registration="${item.id}">Guardar</button></td></tr>`));
+  $('#registrations-table').innerHTML = table(['Academia', 'Responsable', 'WhatsApp', 'Categorías', 'Fecha', 'Estado', 'Acción'], items.map((item) => `<tr><td><strong>${esc(item.team_name)}</strong>${registrationNotes(item)}</td><td>${esc(item.manager_name)}</td><td><a href="https://wa.me/${esc(item.whatsapp.replace(/\D/g, ''))}" target="_blank" rel="noopener">${esc(item.whatsapp)}</a></td><td>${esc(item.categories.join(', '))}</td><td>${dateTime(item.created_at)}</td><td><select class="inline-select" data-registration-status="${item.id}"><option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pendiente</option><option value="contacted" ${item.status === 'contacted' ? 'selected' : ''}>Contactada</option><option value="approved" ${item.status === 'approved' ? 'selected' : ''}>Aprobada</option><option value="rejected" ${item.status === 'rejected' ? 'selected' : ''}>Rechazada</option></select></td><td><button class="mini-button" data-save-registration="${item.id}">Guardar</button></td></tr>`));
 }
 
 function renderPayments() {
@@ -417,6 +452,7 @@ function fillEditor(form, item) {
 $('#gallery-form').addEventListener('submit', async (event) => {
   event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); const file = data.get('photo');
   if (!(file instanceof File) || !file.size) return;
+  if (!data.get('authorized')) { formFeedback(form, 'Confirma la autorización de los apoderados para publicar.', 'error'); return; }
   const extensions = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
   if (!extensions[file.type]) { formFeedback(form, 'Usa una imagen JPG, PNG o WebP.', 'error'); return; }
   if (file.size > 15 * 1024 * 1024) { formFeedback(form, 'La imagen supera los 15 MB.', 'error'); return; }

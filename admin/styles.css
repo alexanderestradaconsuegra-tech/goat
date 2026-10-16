@@ -1,13 +1,13 @@
 :root {
-  --ink: #06100a;
-  --deep: #030806;
-  --forest: #0a2416;
-  --green: #47751d;
-  --lime: #adff39;
-  --oyster: #e8e2d7;
-  --oyster-soft: #f5f1e9;
+  --ink: #07110b;
+  --deep: #040b07;
+  --forest: #0b2417;
+  --green: #0f6b3a;
+  --lime: #b8ff2e;
+  --oyster: #efeadf;
+  --oyster-soft: #f7f4ec;
   --white: #fbfdf9;
-  --muted: #69756c;
+  --muted: #5b685f;
   --line: rgba(8, 36, 20, .14);
   --display: Impact, "Arial Narrow", sans-serif;
 }
@@ -51,7 +51,7 @@ input[type="color"] { min-height: 48px; padding: 6px; }
 .login-card > small { display: block; margin-top: 17px; color: #778279; font-size: 11px; line-height: 1.5; text-align: center; }
 
 .admin-shell { min-height: 100vh; }
-.sidebar { position: fixed; z-index: 30; inset: 0 auto 0 0; display: flex; flex-direction: column; width: 272px; padding: 28px 19px 22px; background: linear-gradient(165deg, #07150d, #020604); color: #fff; }
+.sidebar { position: fixed; z-index: 30; inset: 0 auto 0 0; display: flex; flex-direction: column; width: 272px; padding: 28px 19px 22px; background: linear-gradient(165deg, #07110b, #040b07); color: #fff; }
 .admin-brand { display: flex; align-items: center; gap: 13px; padding: 0 9px 27px; border-bottom: 1px solid rgba(255,255,255,.12); }
 .admin-brand img { width: 43px; height: 52px; object-fit: contain; filter: invert(1); }
 .admin-brand span { display: grid; line-height: 1; }

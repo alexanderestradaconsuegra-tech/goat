@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07150d">
+  <meta name="theme-color" content="#07110b">
   <meta name="robots" content="noindex,nofollow">
   <title>GOAT Admin · Liga 2026</title>
   <meta name="description" content="Panel privado de administración de GOAT LEAGUE 2026, Santiago de Chile.">
@@ -14,6 +14,7 @@
 <body>
   <main class="login-page" id="login-view">
     <section class="login-brand">
+      <i class="deco slash" aria-hidden="true"></i><i class="deco crown" aria-hidden="true"></i>
       <a href="https://goatleague2026.vercel.app" class="back-link">← Volver a GOAT LEAGUE</a>
       <div class="login-copy">
         <img src="/goat-icon.png" alt="" class="login-mark">
@@ -48,12 +49,13 @@
         <button class="nav-item" data-panel="registrations"><span>02</span>Inscripciones <b id="pending-badge">0</b></button>
         <button class="nav-item" data-panel="payments"><span>03</span>Pagos</button>
         <button class="nav-item" data-panel="teams"><span>04</span>Equipos</button>
-        <button class="nav-item" data-panel="players"><span>05</span>Jugadores</button>
-        <button class="nav-item" data-panel="matches"><span>06</span>Partidos</button>
-        <button class="nav-item" data-panel="competition"><span>07</span>Posiciones y goleadores</button>
-        <button class="nav-item" data-panel="gallery"><span>08</span>Fotografías</button>
-        <button class="nav-item" data-panel="settings"><span>09</span>Sede del torneo</button>
-        <button class="nav-item" data-panel="delegates"><span>10</span>Administradores</button>
+        <button class="nav-item" data-panel="draw"><span>05</span>Sorteo</button>
+        <button class="nav-item" data-panel="players"><span>06</span>Jugadores</button>
+        <button class="nav-item" data-panel="matches"><span>07</span>Partidos</button>
+        <button class="nav-item" data-panel="competition"><span>08</span>Posiciones y goleadores</button>
+        <button class="nav-item" data-panel="gallery"><span>09</span>Fotografías</button>
+        <button class="nav-item" data-panel="settings"><span>10</span>Sede del torneo</button>
+        <button class="nav-item" data-panel="delegates"><span>11</span>Administradores</button>
       </nav>
       <a class="public-link" href="https://goatleague2026.vercel.app" target="_blank" rel="noopener">Abrir web pública <b>↗</b></a>
     </aside>
@@ -74,6 +76,10 @@
         <div class="overview-grid">
           <article class="surface"><div class="surface-head"><h3>Solicitudes recientes</h3><button data-go-panel="registrations">Ver todas</button></div><div id="recent-registrations"></div></article>
           <article class="surface payment-summary"><div class="surface-head"><h3>Estado de pagos</h3><button data-go-panel="payments">Gestionar</button></div><div id="payment-summary"></div></article>
+        </div>
+              <div class="overview-grid">
+          <article class="surface"><div class="surface-head"><h3>Cupos por categoría</h3><button data-go-panel="teams">Equipos</button></div><div id="capacity-board"></div></article>
+          <article class="surface"><div class="surface-head"><h3>Fechas del torneo</h3></div><div id="editions-board"></div></article>
         </div>
       </section>
 
@@ -109,6 +115,30 @@
         <div class="split-layout"><div class="surface table-surface"><div id="teams-table"></div></div><form class="surface editor-form" id="team-form"><div class="form-title"><span>Competencia</span><h3>Agregar equipo</h3></div><label>Nombre<input name="name" required maxlength="100"></label><div class="form-grid"><label>Categoría<select name="category"> <option>Sub 7</option><option>Sub 9</option><option>Sub 11</option><option>Sub 13</option><option>Sub 15</option></select></label><label>Sigla<input name="abbreviation" required minlength="1" maxlength="4" placeholder="GOAT"></label></div><div class="form-grid"><label>Color principal<input name="primary_color" type="color" value="#adff39"></label><label>Color camiseta<input name="shirt_color" value="Por definir" maxlength="40"></label></div><label>Responsable<input name="captain" maxlength="100"></label><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Guardar equipo <b>↗</b></button></form></div>
       </section>
 
+      <section class="panel" data-panel-view="draw">
+        <div class="page-heading"><div><span>Transmisión en vivo · 48 a 72 horas antes de la fecha</span><h2>SORTEO DE GRUPOS</h2></div><button class="outline-button" id="draw-full" type="button">Pantalla completa</button></div>
+        <div class="draw-layout">
+          <article class="surface editor-form">
+            <div class="form-title"><span>Una categoría a la vez</span><h3>Preparar sorteo</h3></div>
+            <label>Categoría<select id="draw-category"><option>Sub 7</option><option>Sub 9</option><option>Sub 11</option><option>Sub 13</option><option>Sub 15</option></select></label>
+            <div id="draw-teams" class="draw-teams"></div>
+            <p class="feedback" id="draw-feedback" role="status"></p>
+            <button class="primary-button" id="draw-run" type="button">Sortear grupos <b>↗</b></button>
+            <p class="form-hint">Formato: dos grupos (A y B) de 3 equipos. El sorteo usa aleatoriedad criptográfica del navegador y genera una huella de verificación. El resultado aún no se guarda en la base de datos: cópialo o descárgalo y cárgalo en Partidos.</p>
+          </article>
+          <article class="surface draw-stage" id="draw-stage">
+            <div class="stage-head"><span class="live-dot">EN VIVO</span><strong id="stage-title">Sub 7</strong><small id="stage-meta"></small></div>
+            <div class="stage-groups">
+              <div class="stage-group"><b>Grupo A</b><ol id="stage-a"></ol></div>
+              <div class="stage-group"><b>Grupo B</b><ol id="stage-b"></ol></div>
+            </div>
+            <p class="stage-hash" id="stage-hash"></p>
+            <div class="stage-actions"><button class="secondary-button" id="draw-copy" type="button" disabled>Copiar resultado</button><button class="secondary-button" id="draw-csv" type="button" disabled>Descargar CSV</button></div>
+          </article>
+        </div>
+        <article class="surface"><div class="surface-head"><h3>Sorteos de esta sesión</h3></div><div id="draw-history"></div></article>
+      </section>
+
       <section class="panel" data-panel-view="players">
         <div class="page-heading"><div><span>Planteles y estadísticas</span><h2>JUGADORES</h2></div></div>
         <div class="split-layout"><div class="surface table-surface"><div id="players-table"></div></div><form class="surface editor-form" id="player-form"><div class="form-title"><span>Plantel del equipo</span><h3>Agregar jugador</h3></div><label>Equipo<select name="team_id" required></select></label><label>Nombre completo<input name="full_name" required maxlength="100"></label><div class="form-grid"><label>Posición<select name="position"><option>POR</option><option>DEF</option><option>MED</option><option>DEL</option></select></label><label>Dorsal<input name="shirt_number" type="number" min="1" max="99" value="10"></label></div><div class="form-grid"><label>Goles<input name="goals" type="number" min="0" value="0"></label><label>Asistencias<input name="assists" type="number" min="0" value="0"></label></div><label>URL de foto<input name="photo_url" type="url" placeholder="https://..."></label><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Guardar jugador <b>↗</b></button></form></div>
@@ -126,7 +156,7 @@
 
       <section class="panel" data-panel-view="gallery">
         <div class="page-heading"><div><span>Galería pública</span><h2>FOTOGRAFÍAS</h2></div></div>
-        <div class="split-layout"><div class="gallery-grid" id="gallery-grid"></div><form class="surface editor-form" id="gallery-form"><div class="form-title"><span>JPG, PNG o WebP · máximo 15 MB</span><h3>Subir fotografía</h3></div><label>Archivo<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required></label><label>Descripción<input name="caption" required maxlength="140" placeholder="Fecha, categoría o reconocimiento"></label><p class="form-hint">La fotografía aparecerá automáticamente en la galería de la web pública.</p><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Publicar fotografía <b>↗</b></button></form></div>
+        <div class="split-layout"><div class="gallery-grid" id="gallery-grid"></div><form class="surface editor-form" id="gallery-form"><div class="form-title"><span>JPG, PNG o WebP · máximo 15 MB</span><h3>Subir fotografía</h3></div><label>Archivo<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required></label><label>Descripción<input name="caption" required maxlength="140" placeholder="Fecha, categoría o reconocimiento"></label><label class="check-row"><input type="checkbox" name="authorized" required><span>Confirmo que cuento con la <b>autorización escrita de los apoderados</b> de los menores que aparecen en esta imagen para publicarla.</span></label><p class="form-hint">Solo se publican fotografías con autorización. La imagen aparece automáticamente en la galería de la web pública y puede retirarse en cualquier momento.</p><p class="feedback" data-form-feedback></p><button class="primary-button" type="submit">Publicar fotografía <b>↗</b></button></form></div>
       </section>
 
       <section class="panel" data-panel-view="settings">
@@ -158,6 +188,7 @@
   </div>
 
   <script src="/app.js" defer></script>
+  <script src="/sorteo.js" defer></script>
   <script src="/impacto.js" defer></script>
 </body>
 </html>
