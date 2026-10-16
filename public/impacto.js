@@ -18,13 +18,19 @@
     h.innerHTML = parts.map((p, i) => '<span class="ln" style="--i:' + i + '" aria-hidden="true"><span>' + p + '</span></span>').join('');
   });
   d.documentElement.classList.add('ready');
-  if (hasIO) {
-    const hio = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('h-in'); hio.unobserve(e.target); } });
-    }, { threshold: 0.35 });
-    headings.forEach((h) => hio.observe(h));
+  const M = window.Motion;
+  const mini = M && M.mini;
+  const spr = { type: 'spring', stiffness: 260, damping: 18 };
+  function revealHeading(h) {
+    const lines = $$('.ln > span', h);
+    if (!mini || reduce) { lines.forEach((l) => { l.style.transform = 'none'; }); return; }
+    mini(lines, { transform: ['translateY(115%)', 'translateY(0%)'] }, { duration: 1.05, ease: [0.16, 1, 0.3, 1], delay: M.stagger(0.11) });
+    lines.forEach((l) => { l.style.transform = 'none'; });
+  }
+  if (M && M.inView) {
+    headings.forEach((h) => M.inView(h, () => { revealHeading(h); }, { amount: 0.35 }));
   } else {
-    headings.forEach((h) => h.classList.add('h-in'));
+    headings.forEach((h) => revealHeading(h));
   }
 
   /* Escalonado de las tarjetas que se revelan juntas */
@@ -47,11 +53,18 @@
   const header = $('.site-header');
   const navLinks = $$('.nav > a[href^="#"]:not(.nav-cta)');
   const sections = navLinks.map((a) => $(a.getAttribute('href'))).filter(Boolean);
+  const useScrollAnim = !!(M && M.scroll && mini && !reduce);
+  if (useScrollAnim) {
+    M.scroll(mini(bar, { transform: ['scaleX(0)', 'scaleX(1)'] }, { ease: 'linear' }));
+    const heroEl = $('.hero');
+    if (giant && heroEl) {
+      M.scroll(mini(giant, { translate: ['0px 0px', '0px 190px'] }, { ease: 'linear' }), { target: heroEl, offset: ['start start', 'end start'] });
+    }
+  }
   function onScroll() {
     const max = d.documentElement.scrollHeight - innerHeight;
-    bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+    if (!useScrollAnim) bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
     header.classList.toggle('stuck', scrollY > 160);
-    if (giant && !reduce && scrollY < innerHeight * 1.5) giant.style.setProperty('--sy', scrollY * 0.14 + 'px');
     if (cta && reg) {
       const rr = reg.getBoundingClientRect();
       cta.classList.toggle('away', rr.top < innerHeight * 0.7 && rr.bottom > 140);
@@ -99,7 +112,11 @@
       el.style.transition = 'transform .12s linear, border-color .3s, background .25s';
       el.style.transform = 'perspective(900px) rotateX(' + -py * max + 'deg) rotateY(' + px * max + 'deg) translateY(-4px)';
     });
-    el.addEventListener('pointerleave', () => { el.style.transition = ''; el.style.transform = ''; });
+    el.addEventListener('pointerleave', () => {
+      if (mini) {
+        mini(el, { transform: 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)' }, spr).finished.then(() => { el.style.transition = ''; el.style.transform = ''; });
+      } else { el.style.transition = ''; el.style.transform = ''; }
+    });
   }
   if (fine && !reduce) $$('.season-card, .category-card').forEach((c) => tilt(c, 7));
 
@@ -110,7 +127,10 @@
         const r = b.getBoundingClientRect();
         b.style.transform = 'translate(' + (e.clientX - r.left - r.width / 2) * 0.16 + 'px,' + (e.clientY - r.top - r.height / 2) * 0.26 + 'px)';
       });
-      b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+      b.addEventListener('pointerleave', () => {
+        if (mini) mini(b, { transform: 'translate(0px,0px)' }, spr).finished.then(() => { b.style.transform = ''; });
+        else b.style.transform = '';
+      });
     });
   }
 
@@ -150,17 +170,18 @@
     $$('[data-count]').forEach((c) => cio.observe(c));
   }
 
-  /* Podio: sube cuando el panel entra en pantalla */
+  /* Podio: sube escalonado cuando el panel entra en pantalla */
   const panel = $('.awards-panel');
   if (panel) {
-    if (hasIO) {
-      const pio = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { panel.classList.add('in'); pio.disconnect(); } });
-      }, { threshold: 0.25 });
-      pio.observe(panel);
-    } else {
+    const rise = () => {
       panel.classList.add('in');
-    }
+      if (mini && !reduce) {
+        const pods = [$('.pod.second', panel), $('.pod.first', panel), $('.pod.third', panel)].filter(Boolean);
+        mini(pods, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'], translate: ['0px 36px', '0px 0px'] }, { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: M.stagger(0.14) });
+      }
+    };
+    if (M && M.inView) M.inView(panel, () => { rise(); }, { amount: 0.25 });
+    else rise();
   }
 
   /* Competencia: pista de scroll en tablas anchas y pestaña activa visible en móvil */

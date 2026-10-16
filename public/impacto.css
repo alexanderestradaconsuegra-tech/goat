@@ -39,8 +39,7 @@
 .js:not(.ready) h1, .js:not(.ready) h2 { opacity: 0; animation: hfail .01s 2.5s forwards; }
 @keyframes hfail { to { opacity: 1; } }
 .ln { display: block; overflow: hidden; padding: .26em 0 .1em; margin: -.26em 0 -.1em; }
-.ln > span { display: block; transform: translateY(115%); transition: transform 1.05s var(--ease); transition-delay: calc(var(--i, 0) * 110ms); }
-.h-in .ln > span { transform: none; }
+.ln > span { display: block; transform: translateY(115%); }
 
 /* ───────── Botones: brillo + sensación táctil ───────── */
 .button-primary, .nav-cta, .submit-button, .season-card > a, .metrikas-copy > a { position: relative; overflow: hidden; }
@@ -74,7 +73,7 @@
 }
 .hero-giant {
   position: absolute; z-index: 1; left: 50%; bottom: -3%; pointer-events: none; user-select: none; white-space: nowrap;
-  transform: translate3d(calc(-50% + var(--px, 0px)), calc(var(--py, 0px) + var(--sy, 0px)), 0);
+  transform: translate3d(calc(-50% + var(--px, 0px)), var(--py, 0px), 0);
   font: 400 clamp(14rem, 42vw, 40rem)/.8 var(--display); letter-spacing: .03em;
   color: transparent; -webkit-text-stroke: 1.5px rgba(173, 255, 57, .2);
 }
@@ -129,7 +128,7 @@
   display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; height: var(--h); padding: 16px 12px;
   border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .025));
   text-align: center; clip-path: inset(0 0 0 0);
-  transition: clip-path 1s var(--ease), transform .35s var(--ease), border-color .25s;
+  transition: transform .35s var(--ease), border-color .25s;
 }
 .pod:hover { transform: translateY(-5px); border-color: var(--lime); }
 .pod.first { --h: 268px; border-color: var(--lime); background: linear-gradient(180deg, var(--lime), #7fd21f); color: #061009; box-shadow: 0 24px 60px rgba(105, 220, 42, .22); }
@@ -143,8 +142,6 @@
 .pod span { color: #91a096; font-size: 11px; line-height: 1.4; }
 .pod.first span { color: #244020; }
 .js .awards-panel:not(.in) .pod { clip-path: inset(100% 0 0 0); }
-.awards-panel .pod.second { transition-delay: .15s, 0s, 0s; }
-.awards-panel .pod.first { transition-delay: .3s, 0s, 0s; }
 
 /* ───────── Banda gigante ───────── */
 .mega { overflow: hidden; padding: 30px 0; background: var(--forest); border-block: 1px solid var(--line-bright); white-space: nowrap; }
@@ -271,7 +268,7 @@
 @media (max-width: 420px) { .pod strong { font-size: 11px; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ln > span { transform: none; transition: none; }
+  .ln > span { transform: none; }
   .js:not(.ready) h1, .js:not(.ready) h2 { opacity: 1; animation: none; }
   .js .awards-panel:not(.in) .pod { clip-path: none; }
   .route-track::after { transform: none; transition: none; }
