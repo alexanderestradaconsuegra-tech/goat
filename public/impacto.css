@@ -462,3 +462,58 @@ body::after {
 @media (prefers-reduced-motion: reduce) { .hero h1 { transform: none; } }
 
 .empty-state { border-radius: 22px; }
+
+/* ───────── Jerarquía de contraste ─────────
+   Tres materiales, cada uno con una función:
+   · fondo: verde muy profundo, para que todo lo demás se separe de él
+   · vidrio: tarjetas de datos, más claras y con borde de luz visible
+   · crema: lo que hay que leer primero (jornadas, estados vacíos), como el formulario del flyer
+   · lima: solo la acción o el dato principal */
+.competition { background: radial-gradient(ellipse 70% 50% at 85% 0%, rgba(30, 120, 62, .55), transparent 70%), linear-gradient(160deg, #083a1f, #042513 82%); }
+.format { background: radial-gradient(ellipse 60% 45% at 10% 10%, rgba(30, 120, 62, .5), transparent 70%), linear-gradient(150deg, #083c20, #042613 80%); }
+.format::after { background: radial-gradient(circle, rgba(60, 190, 110, .45), rgba(10, 36, 22, 0) 68%); }
+
+.format-card, .route-track li:not(.cup) {
+  background:
+    radial-gradient(260px circle at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, .22), transparent 62%),
+    linear-gradient(150deg, rgba(255, 255, 255, .24), rgba(255, 255, 255, .09) 45%, rgba(184, 255, 46, .1));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .55),
+    inset 0 0 0 1px rgba(255, 255, 255, .22),
+    inset 0 -24px 40px -28px rgba(0, 0, 0, .35),
+    0 34px 60px -26px rgba(0, 0, 0, .7);
+}
+.format-card p, .route-track small, .glass-stat span { color: rgba(255, 255, 255, .82); }
+.format-card h3 { color: #fff; }
+.format-card.lime p { color: #1d3a18; }
+.route-track li.cup small { color: #1d3a18; }
+
+/* crema: lo primero que se lee */
+.format .phase-line {
+  background: linear-gradient(150deg, #f7f2e5, #e8e1cd);
+  box-shadow: inset 0 1px 0 #fff, 0 34px 60px -26px rgba(0, 0, 0, .65);
+  color: var(--forest);
+}
+.format .phase-line small { color: #5a6c5e; }
+.format .phase-line strong { color: var(--forest); }
+.format .phase-line span { color: #3b4d3f; }
+.format .phase-line i { color: #2c7a2a; border-inline-color: rgba(10, 47, 23, .16); }
+
+.empty-state > div {
+  border: 0; border-top: 4px solid var(--lime); border-radius: 22px;
+  background: linear-gradient(150deg, #f7f2e5, #e8e1cd); color: var(--forest);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.empty-state img { opacity: .9; filter: none; }
+.empty-state h3 { color: var(--forest); }
+.empty-state p { color: #3b4d3f; }
+
+/* tablero de competencia: panel más claro que el fondo */
+.competition-board {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .17), rgba(255, 255, 255, .07));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 0 0 1px rgba(255, 255, 255, .18), 0 40px 80px -30px rgba(0, 0, 0, .7);
+}
+.board-toolbar { border-bottom-color: rgba(255, 255, 255, .18); }
+.competition-tabs button { color: rgba(255, 255, 255, .8); }
+.glass-stat { background: linear-gradient(145deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .07)); border-color: rgba(255, 255, 255, .22); }
