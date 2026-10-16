@@ -1,4 +1,5 @@
 import { supabaseRest } from "../../../lib/supabase-rest.js";
+import { availability } from "../../../lib/editions.js";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,7 @@ export async function POST(request) {
   const categories = Array.isArray(payload.categories) ? payload.categories.map(String).filter(Boolean) : [];
   const message = String(payload.message || "").trim();
   const website = String(payload.website || "").trim();
+  const requestedEdition = String(payload.edition || "").trim();
   const consent = payload.consent && typeof payload.consent === "object" ? payload.consent : {};
 
   if (website) return json({ ok: true });
@@ -33,6 +35,20 @@ export async function POST(request) {
     return json({ error: "WhatsApp invalido." }, 400);
   }
 
+  const state = await availability();
+  const edition = state.editions.find((item) => item.slug === (requestedEdition || state.current));
+  if (!edition) return json({ error: "Esa fecha del torneo ya no recibe inscripciones." }, 400);
+  const full = categories.filter((category) => edition.categories[category]?.full);
+  if (full.length) {
+    return json(
+      {
+        error: `Cupos completos en ${full.join(", ")} para el ${edition.label}.${state.open && state.open !== edition.slug ? " Puedes inscribirte en la próxima fecha." : ""}`,
+        next: state.open && state.open !== edition.slug ? state.open : null
+      },
+      409
+    );
+  }
+
   await supabaseRest("goat_registrations", {
     method: "POST",
     headers: { prefer: "return=minimal" },
@@ -41,7 +57,7 @@ export async function POST(request) {
       manager_name: managerName,
       whatsapp,
       categories,
-      message: `${message}${message ? "\n\n" : ""}[Consentimiento ${String(consent.version || "v1").slice(0, 20)}: terminos+privacidad y autorizacion de apoderados (datos e imagen) aceptados el ${new Date().toISOString()}]`
+      message: `${message}${message ? "\n\n" : ""}[Edición ${edition.slug}] [Consentimiento ${String(consent.version || "v1").slice(0, 20)}: terminos+privacidad y autorizacion de apoderados (datos e imagen) aceptados el ${new Date().toISOString()}]`
     }
   });
 

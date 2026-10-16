@@ -86,6 +86,7 @@ form.addEventListener('submit', async (event) => {
         categories,
         message,
         website,
+        edition: form.dataset.edition || '',
         consent: { terms: consentTerms, guardians: consentGuardians, version: '2026-10-v1' }
       })
     });

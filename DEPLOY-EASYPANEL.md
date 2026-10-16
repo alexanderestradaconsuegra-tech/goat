@@ -25,3 +25,8 @@ En Authentication > URL Configuration agregar el dominio del admin a Site URL / 
 - `https://<dominio-web>/` carga el sitio y `/api/public-data` responde JSON.
 - `https://<dominio-admin>/` muestra el acceso; la consola no debe mostrar errores de CSP.
 - Auto-deploy: activar el webhook de GitHub en cada servicio.
+
+## Cupos por categoría y fechas
+- `GOAT_CAPACITY_PER_CATEGORY` (opcional): número de equipos confirmados por categoría en cada fecha. Cuando una categoría llega a ese número, se bloquea; si todas se llenan, el formulario deriva la inscripción a la próxima fecha. Sin definir, no se bloquea nada.
+- Los cupos se cuentan con los equipos de la tabla `goat_teams` (equipos confirmados). Si esa tabla tiene una columna `edition` (por ejemplo `2026-12`), se cuenta por fecha; sin ella, todos cuentan para la primera.
+- Las fechas están en `src/lib/editions.js` (y en `public/edicion.js` como respaldo).

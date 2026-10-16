@@ -82,7 +82,7 @@
         </div>
 
         <aside class="season-card glass-card" aria-label="Información de la temporada">
-          <div class="season-head"><span>Torneo relámpago 2026</span><b>Inscripciones abiertas</b></div>
+          <div class="season-head"><span>Torneo relámpago 2026</span><b data-reg-status>Inscripciones abiertas</b></div>
           <div class="months" aria-label="Días de competencia"><strong>SÁB</strong><i></i><strong>DOM</strong><i></i><strong>COPA</strong></div>
           <div class="schedule-row"><span>Calendario</span><strong>Sáb 7 y dom 8 de noviembre</strong></div>
           <div class="schedule-row"><span>Sede</span><strong data-venue-name>Sede por confirmar</strong></div>
@@ -101,6 +101,16 @@
         <div class="category-rail-sequence" aria-hidden="true"><span>SUB 7</span><i>◆</i><span>SUB 9</span><i>◆</i><span>SUB 11</span><i>◆</i><span>SUB 13</span><i>◆</i><span>SUB 15</span><i>◆</i><span class="format-chip">FÚTBOL 7</span><i>◆</i></div>
       </div>
     </div>
+
+    <section class="countdown" id="cuenta-regresiva" aria-label="Cuenta regresiva al torneo">
+      <div class="shell countdown-in">
+        <div class="cd-head"><span class="eyebrow" id="cd-eyebrow">Faltan para el pitazo inicial</span><strong id="cd-label">Sábado 7 de noviembre · 09:00</strong></div>
+        <div class="cd-tiles" role="timer" aria-live="off" id="cd-tiles">
+          <div><b id="cd-d">00</b><span>Días</span></div><div><b id="cd-h">00</b><span>Horas</span></div><div><b id="cd-m">00</b><span>Min</span></div><div><b id="cd-s">00</b><span>Seg</span></div>
+        </div>
+        <a class="cd-cta" href="#inscripcion" id="cd-cta">Reservar cupo <i>↗</i></a>
+      </div>
+    </section>
 
     <section class="stats" aria-label="El torneo en cifras">
       <div class="shell stats-grid">
@@ -209,6 +219,7 @@
             <i>→</i>
             <div><small>Domingo 8 de noviembre · finales</small><strong>JORNADA 2</strong><span>Semifinales, finales y premiación oficial.</span></div>
           </div>
+          <div class="next-date reveal" id="next-date"><span class="eyebrow">Próxima fecha</span><div><strong>Cierre de año</strong><p>Sábado 5 y domingo 6 de diciembre de 2026. Si tu categoría se llena para el 7 y 8 de noviembre, podrás inscribirte para esta fecha.</p></div></div>
           <div class="route reveal" aria-label="Ruta del torneo">
             <ol class="route-track">
               <li><span>01</span><strong>Fase de grupos</strong><small>Sábado 7 · 09:00 — 12:00</small></li>
@@ -337,6 +348,7 @@
             <button class="form-again" type="button">Inscribir otro equipo</button>
           </div>
           <div class="form-head"><span>Solicitud de inscripción</span><b>GOAT LEAGUE · 2026</b></div>
+          <p class="edition-notice" id="edition-notice" hidden></p>
           <div class="form-progress" aria-hidden="true"><i></i></div>
           <label>Nombre del club o academia <input name="team" required maxlength="100" autocomplete="organization" placeholder="Ej: Academia Los Grandes"></label>
           <div class="form-split">
@@ -392,5 +404,6 @@
   <script src="/motion.js" defer></script>
   <script src="/impacto.js" defer></script>
   <script src="/galeria.js" defer></script>
+  <script src="/edicion.js" defer></script>
 </body>
 </html>

@@ -634,3 +634,32 @@ body::after { opacity: .045; }
 .footer-legal a:hover { color: var(--lime); text-decoration: underline; text-underline-offset: 3px; }
 .registration-form .form-error { color: #b3261e; }
 .awards-photo img { object-position: 50% 42%; }
+
+/* ───────── Cuenta regresiva ───────── */
+.countdown { position: relative; padding: 34px 0; background: linear-gradient(180deg, #07110b, #0a1d12); border-bottom: 1px solid var(--line); }
+.countdown[hidden] { display: none; }
+.countdown-in { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 28px; }
+.cd-head { display: grid; gap: 6px; }
+.cd-head .eyebrow { color: var(--lime); }
+.cd-head strong { font: 400 clamp(28px, 3.4vw, 44px)/1 var(--display); text-transform: uppercase; color: #f3efe6; }
+.cd-tiles { display: flex; gap: 10px; }
+.cd-tiles[hidden] { display: none; }
+.cd-tiles div { display: grid; place-items: center; min-width: 92px; padding: 14px 10px 10px; border-radius: 18px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .03)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.cd-tiles b { font: 400 clamp(40px, 4.6vw, 60px)/1 var(--display); font-variant-numeric: tabular-nums; color: #f3efe6; }
+.cd-tiles div:first-child b { color: var(--lime); }
+.cd-tiles span { margin-top: 4px; color: rgba(255, 255, 255, .6); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.cd-cta { display: inline-flex; align-items: center; gap: 10px; padding: 16px 22px; border-radius: 16px; background: var(--lime); color: #061009; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; box-shadow: 0 10px 0 -4px rgba(10, 47, 23, .55), 0 18px 30px -14px rgba(184, 255, 46, .55); }
+@media (max-width: 900px) { .countdown-in { grid-template-columns: 1fr; gap: 18px; } .cd-tiles { justify-content: space-between; } .cd-tiles div { flex: 1; min-width: 0; } .cd-cta { justify-content: center; } }
+
+/* ───────── Próxima fecha y aviso de edición ───────── */
+.next-date { display: flex; align-items: center; gap: 22px; max-width: 960px; margin-top: 14px; padding: 18px 24px; border-radius: 22px; border: 1px dashed rgba(184, 255, 46, .45); background: rgba(184, 255, 46, .05); }
+.next-date .eyebrow { flex: none; color: var(--lime); }
+.next-date strong { display: block; font: 400 28px/1 var(--display); text-transform: uppercase; color: #f3efe6; }
+.next-date p { margin: 6px 0 0; color: rgba(255, 255, 255, .75); font-size: 14px; }
+@media (max-width: 700px) { .next-date { flex-direction: column; align-items: flex-start; gap: 10px; } }
+.edition-notice { margin: -8px 0 18px; padding: 12px 16px; border-radius: 14px; background: rgba(15, 107, 58, .1); color: var(--forest); font-size: 13px; font-weight: 600; }
+.edition-notice.warn { background: rgba(179, 38, 30, .1); color: #7a1a14; }
+.edition-notice[hidden] { display: none; }
+.category-options span.is-full { opacity: .45; text-decoration: line-through; cursor: not-allowed; }
+.category-options span.is-full::after { content: "Completo"; position: absolute; margin-top: 34px; font: 700 9px/1 var(--body); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
