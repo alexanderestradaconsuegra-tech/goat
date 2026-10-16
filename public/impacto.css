@@ -6,22 +6,13 @@
 /* overflow: clip recorta igual que hidden pero no permite scroll por código (scrollIntoView) */
 .hero, .intro, .competition, .format, .awards, .metrikas, .registration { overflow: hidden; overflow: clip; }
 
-/* ───────── Progreso de scroll y cursor ───────── */
+/* ───────── Progreso de scroll ───────── */
 .progress {
   position: fixed; z-index: 120; top: 0; left: 0; width: 100%; height: 3px;
   background: linear-gradient(90deg, var(--lime), var(--lime-soft));
   box-shadow: 0 0 14px rgba(173, 255, 57, .8);
   transform: scaleX(0); transform-origin: 0 50%;
 }
-.cursor {
-  position: fixed; z-index: 130; top: 0; left: 0; width: 38px; height: 38px; margin: -19px 0 0 -19px;
-  border: 1.5px solid var(--lime); border-radius: 50%; pointer-events: none; opacity: 0;
-  box-shadow: 0 0 0 1.5px rgba(6, 16, 10, .55);
-  transition: opacity .3s, background .25s; will-change: transform;
-}
-.cursor.on { opacity: .85; }
-.cursor.big { background: rgba(173, 255, 57, .2); }
-@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
 /* ───────── Header que se fija al hacer scroll ───────── */
 .site-header { transition: background .3s, box-shadow .3s, top .3s; }
@@ -273,4 +264,93 @@
   .js .awards-panel:not(.in) .pod { clip-path: none; }
   .route-track::after { transform: none; transition: none; }
   .hero-chips span, .mega-track, .competition-content.ready { animation: none; }
+}
+
+/* ───────── Vidrio: formato y calendario ─────────
+   El desenfoque necesita algo luminoso detrás: orbes de color a la deriva.
+   Mismas tokens de paleta; solo cambia el material de las tarjetas. */
+.format { isolation: isolate; }
+.format::before, .format::after {
+  position: absolute; z-index: -1; content: ""; border-radius: 50%; pointer-events: none; filter: blur(70px);
+}
+.format::before {
+  top: 14%; left: -8%; width: 46vw; height: 46vw; max-width: 640px; max-height: 640px;
+  background: radial-gradient(circle, rgba(173, 255, 57, .5), rgba(173, 255, 57, 0) 68%);
+  animation: orbA 22s ease-in-out infinite alternate;
+}
+.format::after {
+  right: -10%; bottom: 4%; width: 52vw; height: 52vw; max-width: 720px; max-height: 720px;
+  background: radial-gradient(circle, rgba(46, 160, 88, .6), rgba(10, 36, 22, 0) 68%);
+  animation: orbB 26s ease-in-out infinite alternate;
+}
+@keyframes orbA { to { transform: translate3d(22vw, 26vh, 0) scale(1.15); } }
+@keyframes orbB { to { transform: translate3d(-24vw, -22vh, 0) scale(1.1); } }
+
+.format .phase-line,
+.format .operation-strip,
+.format-card,
+.route-track li:not(.cup) {
+  border: 0; border-radius: 22px;
+  background:
+    radial-gradient(260px circle at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, .2), transparent 62%),
+    linear-gradient(150deg, rgba(255, 255, 255, .17), rgba(255, 255, 255, .05) 42%, rgba(173, 255, 57, .08));
+  -webkit-backdrop-filter: blur(26px) saturate(1.8); backdrop-filter: blur(26px) saturate(1.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .42),
+    inset 0 0 0 1px rgba(255, 255, 255, .09),
+    inset 0 -24px 40px -28px rgba(0, 0, 0, .45),
+    0 34px 60px -26px rgba(0, 0, 0, .75);
+}
+.format .phase-line, .format .operation-strip { overflow: hidden; }
+.format .phase-line i { border-inline-color: rgba(255, 255, 255, .12); }
+.format-card, .route-track li { transition: transform .4s var(--ease), box-shadow .3s, background .3s; }
+.format-card:hover, .route-track li:not(.cup):hover {
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .6),
+    inset 0 0 0 1px rgba(173, 255, 57, .45),
+    inset 0 -24px 40px -28px rgba(0, 0, 0, .4),
+    0 40px 70px -26px rgba(0, 0, 0, .8), 0 0 50px -12px rgba(173, 255, 57, .35);
+}
+/* destello de cristal: franja diagonal que cruza al pasar */
+.format-card::before {
+  position: absolute; inset: 0; z-index: 0; content: ""; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, .22) 50%, transparent 62%);
+  transform: translateX(-120%); transition: transform .9s var(--ease);
+}
+.format-card:hover::before { transform: translateX(120%); }
+.format-card > * { position: relative; z-index: 1; }
+.format-card.glass-card::after { border-radius: inherit; background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, .16), rgba(173, 255, 57, .08) 40%, transparent 65%); }
+.format-card { overflow: hidden; }
+.format-number {
+  background: linear-gradient(180deg, #fff 8%, var(--lime) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 6px 22px rgba(173, 255, 57, .28));
+}
+.format-card.lime {
+  border: 0;
+  background:
+    radial-gradient(300px circle at var(--mx, 80%) var(--my, 0%), rgba(255, 255, 255, .55), transparent 60%),
+    linear-gradient(150deg, rgba(214, 255, 130, .96), rgba(150, 232, 52, .86));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), inset 0 -22px 34px -22px rgba(30, 90, 20, .5), 0 34px 70px -22px rgba(105, 220, 42, .5);
+}
+.format-card.lime .format-number { background: none; color: #061009; filter: none; }
+
+.route-track li:not(.cup) { overflow: visible; }
+.route-track li.cup {
+  border: 0; border-radius: 22px;
+  background:
+    radial-gradient(240px circle at var(--mx, 80%) var(--my, 0%), rgba(255, 255, 255, .55), transparent 60%),
+    linear-gradient(150deg, rgba(214, 255, 130, .96), rgba(150, 232, 52, .86));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 30px 60px -22px rgba(105, 220, 42, .55);
+}
+.route-track li::before { border-radius: 50%; }
+
+@media (max-width: 760px) {
+  .format .phase-line, .format-card, .route-track li:not(.cup) { -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); border-radius: 18px; }
+  .format::before, .format::after { filter: blur(50px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .format::before, .format::after { animation: none; }
+  .format-card::before { display: none; }
 }

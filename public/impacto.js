@@ -94,7 +94,7 @@
 
   /* Luz en tarjetas de vidrio */
   if (fine) {
-    $$('.glass-card').forEach((c) => {
+    $$('.glass-card, .phase-line, .route-track li').forEach((c) => {
       c.addEventListener('pointermove', (e) => {
         const r = c.getBoundingClientRect();
         c.style.setProperty('--mx', e.clientX - r.left + 'px');
@@ -119,6 +119,7 @@
     });
   }
   if (fine && !reduce) $$('.season-card, .category-card').forEach((c) => tilt(c, 7));
+  if (fine && !reduce) $$('.format-card, .route-track li').forEach((c) => tilt(c, 5));
 
   /* Botones magnéticos */
   if (fine && !reduce) {
@@ -132,23 +133,6 @@
         else b.style.transform = '';
       });
     });
-  }
-
-  /* Cursor en anillo */
-  const cur = $('.cursor');
-  if (fine && !reduce && cur) {
-    let cx = 0, cy = 0, tx = 0, ty = 0, big = false;
-    addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; cur.classList.add('on'); });
-    d.addEventListener('pointerover', (e) => {
-      big = !!(e.target.closest && e.target.closest('a, button, select, input, textarea, label'));
-      cur.classList.toggle('big', big);
-    });
-    d.documentElement.addEventListener('mouseleave', () => cur.classList.remove('on'));
-    (function loop() {
-      cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
-      cur.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)' + (big ? ' scale(1.8)' : '');
-      requestAnimationFrame(loop);
-    })();
   }
 
   /* Contadores */
