@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOAT UI Kit · demo</title>
+<link rel="stylesheet" href="kit.css">
+<style>
+  body { padding: 0; } .wrap { width: min(1100px, calc(100% - 40px)); margin: 0 auto; padding: 70px 0; }
+  h1 { font-size: clamp(54px, 9vw, 110px); margin: 0 0 12px; } .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 24px 0; } .num { font-size: 64px; }
+  .light { background: var(--k-bone); color: var(--k-ink); padding: 40px; border-radius: 28px; margin-top: 30px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="k-body k-grain">
+<div class="k-progress"></div>
+<div class="wrap">
+  <span class="k-chip k-chip--accent">UI Kit</span>
+  <h1 class="k-display">Botones y tarjetas <span class="k-accent">con presencia.</span></h1>
+  <p>Cambia las variables de <code>:root</code> en kit.css y se adapta a cualquier marca.</p>
+  <div class="row">
+    <a class="k-btn" data-k-magnetic href="#">Acción principal ↗</a>
+    <a class="k-btn k-btn--ghost" data-k-magnetic href="#">Secundario</a>
+    <a class="k-btn k-btn--whatsapp k-btn--round" href="#" aria-label="WhatsApp">W</a>
+  </div>
+  <div class="grid">
+    <div class="k-glass" data-k-reveal data-k-spotlight data-k-tilt="5"><span class="k-chip">Vidrio</span><p class="k-display num" data-k-count="180">0</p><p>Tarjeta de vidrio con reflejo e inclinación.</p></div>
+    <div class="k-cream" data-k-reveal><span class="k-chip" style="color:#07110b">Crema</span><p class="k-display num">45</p><p>Para lo que se lee primero.</p></div>
+    <div class="k-card-accent" data-k-reveal><span class="k-chip">Acento</span><p class="k-display num">1º</p><p>Dato o acción principal.</p></div>
+  </div>
+  <div class="k-gold" data-k-reveal><p class="k-display" style="font-size:36px;margin:0">Detalle premium en oro</p></div>
+  <div class="light" data-k-reveal>
+    <h2 class="k-display" style="font-size:44px;margin:0 0 16px">Formulario</h2>
+    <label class="k-field">Nombre<input placeholder="Tu nombre"></label>
+    <button class="k-btn k-btn--dark" type="button" data-k-magnetic>Enviar ↗</button>
+  </div>
+</div>
+<script src="motion.js"></script>
+<script src="kit.js"></script>
+</body>
+</html>
